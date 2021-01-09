@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import NavbarGwm from './NavbarGwm'
 
 
-function MainPage (props){
+function Profil (props){
 
   
   console.log('Profil Page');
@@ -364,4 +364,4 @@ function mapDispatchToProps(dispatch) {
   export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(MainPage);
+  )(Profil);

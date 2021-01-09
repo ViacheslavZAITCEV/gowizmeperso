@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  // div,
-  ScrollView,
-  // p,
-  Input,
-  Button,
-  Badge,
   Card,
 } from 'antd';
 
@@ -18,8 +12,6 @@ import { connect } from 'react-redux';
 
 import NavbarGwm from './NavbarGwm'
 import CardEvenement from "./components/CardEvenement";
-
-const { Meta } = Card;
 
 function MainPage (props){
 
@@ -48,27 +40,61 @@ function MainPage (props){
         };
         function setCardsEvents(body){
           if (body){
-             var cardsEvents = body.map( (eventMap, i)=>{
+            //  var cardsEvents = body.map( (eventMap, i)=>{
+            var cinemaCards = [];
+            var theatreCards = [];
+            var concertCards = [];
+            var expoCards = [];
+            for (let i=0; i < body.length; i++){
+              var eventMap = body[i];
                 // console.log('i=', i, '  eventMap=', eventMap);
                 if (eventMap.type === 'film'){
-                  return (
+                  cinemaCards.push(
                     <div key={i} >
-                      <Card
-                        style={{ width: 170, height: 230 }}
-                        cover={
-                          <img
-                          alt={eventMap.nom}
-                          src={eventMap.image}
-                          />
-                        }
-                        >
-                      </Card>
+                      <CardEvenement
+                        event={eventMap}
+                        item={i}   
+                      >
+                      </CardEvenement>
                     </div>
                   )
-                }
-              });
-            console.log('cardsEvents=', cardsEvents)  
-            setCinema(cardsEvents);
+                }else if (eventMap.type === 'théâtre'){
+                  theatreCards.push(
+                    <div key={i} >
+                      <CardEvenement
+                        event={eventMap}
+                        item={i}   
+                      >
+                      </CardEvenement>
+                    </div>
+                  )
+                }else if (eventMap.type === 'exposition'){
+                  expoCards.push(
+                    <div key={i} >
+                      <CardEvenement
+                        event={eventMap}
+                        item={i}   
+                      >
+                      </CardEvenement>
+                    </div>
+                  )
+                }else if (eventMap.type === 'concert'){
+                  concertCards.push(
+                    <div key={i} >
+                      <CardEvenement
+                        event={eventMap}
+                        item={i}   
+                      >
+                      </CardEvenement>
+                    </div>
+                  )
+                };
+            }
+            // console.log('cardsEvents=', cardsEvents)  
+            setCinema(cinemaCards);
+            setTheatre(theatreCards);
+            setConcert(concertCards);
+            setExpo(expoCards);
           }
         };
         chargeListEvent();
@@ -87,6 +113,15 @@ function MainPage (props){
       {/* {console.log('cinema=', cinema)} */}
       <Row className='cardsRow'>
           {cinema}
+      </Row>
+      <Row className='cardsRow'>
+          {theatre}
+      </Row>
+      <Row className='cardsRow'>
+          {concert}
+      </Row>
+      <Row className='cardsRow'>
+          {expo}
       </Row>
 
     </Container>

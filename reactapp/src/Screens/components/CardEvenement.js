@@ -6,8 +6,9 @@ import {Card} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 import Meta from 'antd/lib/card/Meta';
-// import urlLocal from '../urlDevsGoWizMe';
 
+
+import { connect } from 'react-redux';
 
 
 
@@ -99,10 +100,11 @@ import Meta from 'antd/lib/card/Meta';
 
 function CardEvenement(props){
 
-  console.log ('props =', props)
-  console.log ('props.event =', props.event)
+  // console.log ('props =', props)
+  // console.log ('props.event =', props.event)
   
   const [likeEventState,setLikeEventState ] = useState ( '#FFFFFF' );
+  const [likeEventContourState,setLikeEventContourState ] = useState ( '#D70026' );
 
   //   function isUserLikedEvent (u, popularite){
 //     console.log('isUserLikedEvent; popularite=', popularite);
@@ -135,22 +137,22 @@ function CardEvenement(props){
 
   <Card 
   // key={i}
-    // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-      style={{ width: 170, height: 230 }}
-      cover={
-        <img
-          alt='name evenement'
-          src='https://ariane.lacapsule.academy/static/media/LaCapsule_Logo_Pink_White_RGB.afed8eb4.png'
-        />
-      }
-  >
-
-    <FontAwesomeIcon icon={faHeart}
-      style={{ position: 'absolute', top: 5, left: 140 }}
-      color={ likeEventState } 
-      // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
-      // onPress={() => likeEvent(props.user, props.x)}
+  // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
+  style={{ width: 170, height: 230 }}
+  cover={
+    <img
+    alt={props.event.nom}
+    src={props.event.image}
     />
+  }
+  >
+  <FontAwesomeIcon icon={faHeart}
+    style={{position: 'relative', top: -265, left: 140 }}
+    color={ likeEventState } 
+    // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
+    // onPress={() => likeEvent(props.user, props.x)}
+  />
+
 
       {/* <Heart
         size={25}
@@ -177,8 +179,23 @@ function CardEvenement(props){
 )};
 
 
+function mapDispatchToProps(dispatch) {
+  return {
+    onAddIdEvent: function (idEvent) {
+      dispatch({ type: 'addIdEvent', idEvent: idEvent });
+    },
+  }
+}
 
+function mapStateToProps(state) {
+  return {
+    token: state.tokenReducer,
+    user : state.userReducer,
+    currentCity: state.currentCityReducer
+  }
+}
 
-
-
-export default CardEvenement;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CardEvenement);

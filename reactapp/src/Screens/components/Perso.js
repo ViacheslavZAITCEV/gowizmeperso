@@ -24,6 +24,7 @@ function Perso(props) {
   const [errSignIn, setErrSignIn] = useState('');
   const [clickAvatar, setClickAvatar] = useState(false);
   const [toMainPage, setToMainPage] = useState(false);
+  const [signUp, setSignUp] = useState(false);
   
 
 
@@ -39,7 +40,6 @@ function Perso(props) {
         body : `email=${login}&pass=${pass}`
       };
       var resultRAW = await fetch(`/users/sign-in`, requet);
-      // var resultRAW = await fetch(`/signin?login=${login}&pass=${pass}`);
       var result = await resultRAW.json();
       if(result.response){
         console.log('login with email = ', login);
@@ -66,16 +66,19 @@ function Perso(props) {
     }
   }
 
+
   if (clickAvatar){
     console.log('click avatar');
+    // setClickAvatar(false)
     return(
        <Redirect to='/Profil' />
     );
-  // }else if (toMainPage){
-  //   console.log('login passe');
-  //   return(
-  //      <Redirect to='/' />
-  //   );
+  }else if (signUp){
+    console.log('click sign-up');
+    setSignUp(false)
+    return(
+       <Redirect to='/newUser' />
+    );
   }else{
 
 
@@ -87,13 +90,13 @@ function Perso(props) {
         // <Form >
             <Row className="Sign">/
             <Col>
-                <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='your email' value={login}/>
-                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='your password' value = {pass} />
+                <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
+                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
                 <Label style={{color : 'white'}}>{errSignIn}</Label> 
             </Col>
             <Col>
-                <Label onClick={ ()=> loginFE() } className="Login-input" type="primary">Sign-in</Label>
-                <Label to='newUser' className='Login-input' >Create an account</Label>
+                <Button onClick={ ()=> loginFE() } className="Login-input" type="primary">connexion</Button>
+                <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
 
             </Col>
             </Row>

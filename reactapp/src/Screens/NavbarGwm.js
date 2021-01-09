@@ -47,7 +47,7 @@ function NavbarGwm(props) {
                     to='/'
                     className='navBarBtn'
                     >
-                    eventements
+                    évènements
                   </Link>
 
                   
@@ -55,7 +55,7 @@ function NavbarGwm(props) {
                     to='/'
                     className='navBarBtn'
                   >
-                    planing
+                    planning
                   </Link>
 
 
@@ -63,7 +63,7 @@ function NavbarGwm(props) {
                     to='/'
                     className='navBarBtn'
                   >
-                    freinds
+                    mes amis
                   </Link>
 
 
