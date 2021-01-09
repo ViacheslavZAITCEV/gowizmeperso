@@ -5,13 +5,13 @@ import {Card} from 'antd';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-import Meta from 'antd/lib/card/Meta';
+// import Meta from 'antd/lib/card/Meta';
 
 
 import { connect } from 'react-redux';
 
 
-
+const {Meta} = Card;
 
 
 // function Heart (props){
@@ -104,7 +104,7 @@ function CardEvenement(props){
   // console.log ('props.event =', props.event)
   
   const [likeEventState,setLikeEventState ] = useState ( '#FFFFFF' );
-  const [likeEventContourState,setLikeEventContourState ] = useState ( '#D70026' );
+  // const [likeEventContourState,s etLikeEventContourState ] = useState ( '#D70026' );
 
   //   function isUserLikedEvent (u, popularite){
 //     console.log('isUserLikedEvent; popularite=', popularite);
@@ -138,7 +138,6 @@ function CardEvenement(props){
   <Card 
   // key={i}
   // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-  style={{ width: 170, height: 230 }}
   cover={
     <img
     alt={props.event.nom}

@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  Card,
-} from 'antd';
-
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
@@ -50,43 +46,43 @@ function MainPage (props){
                 // console.log('i=', i, '  eventMap=', eventMap);
                 if (eventMap.type === 'film'){
                   cinemaCards.push(
-                    <div key={i} >
+                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                       >
                       </CardEvenement>
-                    </div>
+                    </Col>
                   )
                 }else if (eventMap.type === 'théâtre'){
                   theatreCards.push(
-                    <div key={i} >
+                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                       >
                       </CardEvenement>
-                    </div>
+                    </Col>
                   )
                 }else if (eventMap.type === 'exposition'){
                   expoCards.push(
-                    <div key={i} >
+                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                       >
                       </CardEvenement>
-                    </div>
+                    </Col>
                   )
                 }else if (eventMap.type === 'concert'){
                   concertCards.push(
-                    <div key={i} >
+                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                       >
                       </CardEvenement>
-                    </div>
+                    </Col>
                   )
                 };
             }
@@ -112,13 +108,53 @@ function MainPage (props){
 
       {/* {console.log('cinema=', cinema)} */}
       <Row className='cardsRow'>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold'
+            }}>
+            CINEMA
+        </div>
+      </Row>
+      <Row className='cardsRow'>
           {cinema}
+      </Row>
+      <Row className='cardsRow'>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold'
+            }}>
+            THEATRE
+        </div>
       </Row>
       <Row className='cardsRow'>
           {theatre}
       </Row>
       <Row className='cardsRow'>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold'
+            }}>
+            CONCERTS
+        </div>
+      </Row>
+      <Row className='cardsRow'>
           {concert}
+      </Row>
+      <Row className='cardsRow'>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold'
+            }}>
+            EXPOSITIONS
+        </div>
       </Row>
       <Row className='cardsRow'>
           {expo}
