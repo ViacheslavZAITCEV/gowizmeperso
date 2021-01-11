@@ -6,8 +6,7 @@ import {
 } from 'reactstrap';
 
 import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Row, Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
@@ -55,6 +54,7 @@ function Profil (props){
           keys.forEach( key => {
             if( typeof key === 'string' && key !== '_id' ){
               badgesTemp.push(
+                <span class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <Badge
                   
                   key={compt++}
@@ -70,6 +70,7 @@ function Profil (props){
                   >
                 {key}
                 </Badge>
+                </span>
               )
             }
           })
@@ -310,11 +311,9 @@ function Profil (props){
         {displayPrenom()}
         {displayVille()}
         <Row> Préférences: </Row>
-        {/* <Row>  */}
-          <Col xs='1'  >
+        <Row> 
             {badges}
-          </Col>
-        {/* </Row> */}
+        </Row>
         <Row 
           className='button1'
           onClick={ ()=> deconnecter()}
