@@ -303,27 +303,32 @@ function Profil (props){
 
 
     return (
-    <Container>
-        <NavbarGwm/>
+      <div>
+      <NavbarGwm/>
         {displayAvatar()}
         {displayNom()}
         {displayPrenom()}
         {displayVille()}
-        <Row> Préférences: </Row>
-        {/* <Row>  */}
-          <Col xs='1'  >
+        Préférences:
+        
+
+        <Container>
+        <Row>
+          <Col xs='12' sm='6' md='4'lg='2' >
             {badges}
+
           </Col>
-        {/* </Row> */}
-        <Row 
+        </Row>
+        </Container>
+
+
+        <Button          
           className='button1'
           onClick={ ()=> deconnecter()}
         >
           Deconecter        
-        </Row>
-      {/* </Col> */}
-
-    </Container>
+        </Button>
+    </div>
     )
  }
 }
