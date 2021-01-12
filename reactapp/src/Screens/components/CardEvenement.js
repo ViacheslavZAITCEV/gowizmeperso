@@ -149,11 +149,11 @@ function CardEvenement(props){
 
   return(
 
-  <Col xs="12" sm="6" md="4" lg="2" xl="1" style={{position: 'relative'}} >
+  <Col xs="12" sm="6" md="4" lg="4" xl="3" >
   <Card 
   // key={i}
   // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-    style={{position: 'relative',  width: 220, height: 330 }}
+    style={{ width: 220, height: 330 }}
     cover={
       <img
       alt={props.event.nom}

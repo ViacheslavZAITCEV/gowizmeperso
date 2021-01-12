@@ -38,10 +38,10 @@
 }
 
 .cardsRow {
-  /* display: flex;
+  display: flex;
   flex-direction: row;
-  align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
+  justify-content: space-between;
 }
 
 .cardsEspaceRow{
@@ -100,7 +100,7 @@
   padding-right: 0.5vh;
   color: white;
   background-color: #3C6382;
-  border-radius: 3%;
+  border-radius: 6%;
   margin-right: 1vw;
   margin-left: 1vw;
   margin-top : 0.3vh;

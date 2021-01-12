@@ -93,6 +93,7 @@ function MainPage (props){
 
 
     return (
+      <div>
     <Container>
       <NavbarGwm/>
 
@@ -106,9 +107,9 @@ function MainPage (props){
             CINEMA
         </Col>
       </Row>
-      <div className='cardsRow' style={{ background:'#3C6382'}}>
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
           {cinema}
-      </div>
+      </Row>
       <Row className='cardsEspaceRow'></Row>
       <Row className='cardsRow' style={{ background:'#E55039'}}>
         <div
@@ -153,6 +154,7 @@ function MainPage (props){
       </Row>
 
     </Container>
+    </div>
     )
   
 }
