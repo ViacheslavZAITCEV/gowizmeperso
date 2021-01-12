@@ -134,10 +134,12 @@ function CardEvenement(props){
   // }, [props.user])
 
   return(
+  <span style={{position: 'relative'}} >
 
   <Card 
   // key={i}
   // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
+  style={{position: 'relative',  width: 220, height: 330 }}
   cover={
     <img
     alt={props.event.nom}
@@ -145,14 +147,6 @@ function CardEvenement(props){
     />
   }
   >
-  <FontAwesomeIcon icon={faHeart}
-    style={{position: 'relative', top: -265, left: 140 }}
-    color={ likeEventState } 
-    // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
-    // onPress={() => likeEvent(props.user, props.x)}
-  />
-
-
       {/* <Heart
         size={25}
         token={props.token}      
@@ -173,6 +167,21 @@ function CardEvenement(props){
       </div>
     </Meta>
   </Card>
+  <FontAwesomeIcon icon={faHeart}
+    // style={{position: 'inherit'}}
+    style={{position: 'relative', top: -320, left: 170, width: 20, height: 20 }}
+    color='#D70026'
+
+  />
+  <FontAwesomeIcon icon={faHeart}
+    // style={{position: 'inherit'}}
+    style={{position: 'relative', top: -322, left: 152 }}
+    color={ likeEventState } 
+    // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
+    // onPress={() => likeEvent(props.user, props.x)}
+  />
+
+  </span>
 
 
 )};

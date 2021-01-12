@@ -54,7 +54,7 @@ function Profil (props){
           keys.forEach( key => {
             if( typeof key === 'string' && key !== '_id' ){
               badgesTemp.push(
-                <span class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                 <Badge
                   
                   key={compt++}
@@ -70,7 +70,7 @@ function Profil (props){
                   >
                 {key}
                 </Badge>
-                </span>
+                </Col>
               )
             }
           })

@@ -51,9 +51,13 @@
 
 .cardsRow {
   display: flex;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  /* justify-content: center; */
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardsEspaceRow{
+  margin: 3vw;
 }
 
 .navbargowizme  {
@@ -129,14 +133,6 @@
   color: white;
 }
 
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
 .persoAvatar {
   display: flex;
   flex-direction: row;
@@ -151,7 +147,7 @@
 .persoLine {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin-left: 1vw;
   margin-right: 1vw;
   margin-top: 1vh;

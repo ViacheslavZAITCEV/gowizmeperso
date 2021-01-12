@@ -104,10 +104,6 @@ function Perso(props) {
         console.log('avatar')
         return (
             <Container>
-              {/* <Col className='flex-col navBarName'>
-                Bonjour
-                {user.prenom}
-              </Col> */}
               <Col>
                 <img 
                   src={user.avatar} 

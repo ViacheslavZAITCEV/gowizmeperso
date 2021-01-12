@@ -48,6 +48,7 @@ function MainPage (props){
                       <CardEvenement
                         event={eventMap}
                         item={i}   
+                        onClick
                       >
                       </CardEvenement>
                     </Col>
@@ -104,21 +105,21 @@ function MainPage (props){
           <NavbarGwm/>
       </Col>
 
-      {/* {console.log('cinema=', cinema)} */}
-      <Row className='cardsRow'>
-        <div
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
+        <Col
             style={{
               fontSize: 22,
               margin: 7,
               fontWeight: 'bold'
             }}>
             CINEMA
-        </div>
+        </Col>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
           {cinema}
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow' style={{ background:'#E55039'}}>
         <div
             style={{
               fontSize: 22,
@@ -128,23 +129,11 @@ function MainPage (props){
             THEATRE
         </div>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#E55039'}}>
           {theatre}
       </Row>
-      <Row className='cardsRow'>
-        <div
-            style={{
-              fontSize: 22,
-              margin: 7,
-              fontWeight: 'bold'
-            }}>
-            CONCERTS
-        </div>
-      </Row>
-      <Row className='cardsRow'>
-          {concert}
-      </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow' style={{ background:'#F6E58D'}}>
         <div
             style={{
               fontSize: 22,
@@ -154,8 +143,23 @@ function MainPage (props){
             EXPOSITIONS
         </div>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#F6E58D'}}>
           {expo}
+      </Row>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow'  style={{ background:'#3C6382'}}>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold',
+              background:'green'
+            }}>
+            CONCERTS
+        </div>
+      </Row>
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
+          {concert}
       </Row>
 
     </Container>
