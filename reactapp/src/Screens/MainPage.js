@@ -7,16 +7,15 @@ import { connect } from 'react-redux';
 import NavbarGwm from './NavbarGwm'
 import CardEvenement from "./components/CardEvenement";
 
+
 function MainPage (props){
 
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(props.token);
 
     const [cinema,setCinema] = useState([]);
     const [theatre,setTheatre] = useState([]);
     const [expo,setExpo] = useState([]);
     const [concert,setConcert] = useState([]);
-    
 
     useEffect( ()=> {
         async function chargeListEvent(){
@@ -44,14 +43,13 @@ function MainPage (props){
                 // console.log('i=', i, '  eventMap=', eventMap);
                 if (eventMap.type === 'film'){
                   cinemaCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
+
                       <CardEvenement
                         event={eventMap}
                         item={i}   
-                        onClick
-                      >
+                        >
                       </CardEvenement>
-                    </Col>
+
                   )
                 }else if (eventMap.type === 'théâtre'){
                   theatreCards.push(
@@ -59,7 +57,7 @@ function MainPage (props){
                       <CardEvenement
                         event={eventMap}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
                     </Col>
                   )
@@ -69,7 +67,7 @@ function MainPage (props){
                       <CardEvenement
                         event={eventMap}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
                     </Col>
                   )
@@ -79,7 +77,7 @@ function MainPage (props){
                       <CardEvenement
                         event={eventMap}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
                     </Col>
                   )
@@ -115,9 +113,9 @@ function MainPage (props){
             CINEMA
         </Col>
       </Row>
-      <Row className='cardsRow' style={{ background:'#3C6382'}}>
+      <div className='cardsRow' style={{ background:'#3C6382'}}>
           {cinema}
-      </Row>
+      </div>
       <Row className='cardsEspaceRow'></Row>
       <Row className='cardsRow' style={{ background:'#E55039'}}>
         <div
@@ -152,8 +150,7 @@ function MainPage (props){
             style={{
               fontSize: 22,
               margin: 7,
-              fontWeight: 'bold',
-              background:'green'
+              fontWeight: 'bold'
             }}>
             CONCERTS
         </div>
@@ -164,6 +161,7 @@ function MainPage (props){
 
     </Container>
     )
+  
 }
 
 
@@ -193,7 +191,6 @@ function mapDispatchToProps(dispatch) {
   
   function mapStateToProps(state) {
     return {
-      token: state.tokenReducer,
       user : state.userReducer,
       currentCity: state.currentCityReducer
     }

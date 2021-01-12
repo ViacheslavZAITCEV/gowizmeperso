@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
-// import React, {useState, useEffect} from 'react';
-import {Card} from 'antd';
-// import {Card, Badge} from 'antd';
+import React, {useState, useEffect} from 'react';
+import { Redirect } from "react-router-dom";
 
+import {Card} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-// import Meta from 'antd/lib/card/Meta';
 
+import {Container, Row, Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
@@ -103,6 +102,9 @@ function CardEvenement(props){
   // console.log ('props =', props)
   // console.log ('props.event =', props.event)
   
+  const [eventChoix, setEventChoix] = useState(null);
+  const [clickEvent, setClickEvent] = useState(false);
+
   const [likeEventState,setLikeEventState ] = useState ( '#FFFFFF' );
   // const [likeEventContourState,s etLikeEventContourState ] = useState ( '#D70026' );
 
@@ -133,20 +135,34 @@ function CardEvenement(props){
   //   upStateHeart();
   // }, [props.user])
 
-  return(
-  <span style={{position: 'relative'}} >
 
+
+  if (clickEvent){
+    console.log('clickEvent');
+    console.log('event=', props.event);
+    props.newEvent(props.event);
+    // setClickEvent(false);
+    return(
+      <Redirect to='Evenement' />
+    )
+  }else{
+
+  return(
+
+  <Col xs="12" sm="6" md="4" lg="2" xl="1" style={{position: 'relative'}} >
   <Card 
   // key={i}
   // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-  style={{position: 'relative',  width: 220, height: 330 }}
-  cover={
-    <img
-    alt={props.event.nom}
-    src={props.event.image}
-    />
-  }
+    style={{position: 'relative',  width: 220, height: 330 }}
+    cover={
+      <img
+      alt={props.event.nom}
+      src={props.event.image}
+      />
+    }
+    onClick={ ()=>{setEventChoix(props.event); setClickEvent(true)}}
   >
+
       {/* <Heart
         size={25}
         token={props.token}      
@@ -180,24 +196,25 @@ function CardEvenement(props){
     // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
     // onPress={() => likeEvent(props.user, props.x)}
   />
+  </Col>
 
-  </span>
 
+  )
+    }
+};
 
-)};
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAddIdEvent: function (idEvent) {
-      dispatch({ type: 'addIdEvent', idEvent: idEvent });
+    newEvent: function (evenement) {
+      dispatch({ type: 'evenement', evenement: evenement });
     },
   }
 }
 
 function mapStateToProps(state) {
   return {
-    token: state.tokenReducer,
     user : state.userReducer,
     currentCity: state.currentCityReducer
   }
