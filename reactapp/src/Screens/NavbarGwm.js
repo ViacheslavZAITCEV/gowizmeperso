@@ -41,29 +41,32 @@ function NavbarGwm(props) {
           <Navbar color="light" bg='#000000' light expand="md">
 
             <Row className='navbargowizme'>
+              <Col xs="2" sm="1" md="1" lg="1" xl="1">
                   <Link 
                     to='/'
                     className='navBarBtn'
                     >
                     évènements
                   </Link>
-
-                  
+              </Col>
+              <Col xs="2" sm="1" md="1" lg="1" xl="1">
                   <Link 
                     to='/'
                     className='navBarBtn'
                   >
                     planning
                   </Link>
-
-
-                  <Link 
+              </Col>
+              <Col xs="2" sm="1" md="1" lg="1" xl="1">
+                 <Link 
                     to='/'
                     className='navBarBtn'
                   >
-                    mes amis
+                    amis
                   </Link>
 
+              </Col>
+              <Col xs="2" sm="1" md="1" lg="1" xl="1">
 
                   <Link 
                     to='/'
@@ -71,17 +74,19 @@ function NavbarGwm(props) {
                   >
                     find
                   </Link>
+              </Col>
+              <Col xs="2" sm="1" md="1" lg="1" xl="1">
 
 
                   <Link 
                     // onClick={ ()=> { setToProfil(true) }}
                     to='Profil'
                     className='navBarBtn'
-                  >
+                    >
                     profil
                   </Link>
-
-                  <Perso/>
+              </Col>
+              <Perso/>
 
             </Row>
           </Navbar>

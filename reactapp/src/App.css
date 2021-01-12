@@ -58,10 +58,10 @@
 }
 
 .navBarBtn {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   color: white;
   margin: 1vw;
   padding-top: 1.5vh;

@@ -91,33 +91,29 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
-        // <Form >
-            <Row className="Sign">/
-            <Col>
+          <div className="Sign">/
+            <Col xs="4" sm="3" md="3" lg="2" xl="1">
                 <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
                 <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
                 <Label style={{color : 'white'}}>{errSignIn}</Label> 
             </Col>
-            <Col>
+            <Col xs="2" sm="1" md="1" lg="1" xl="1">
                 <Button onClick={ ()=> loginFE() } className="Login-input" type="primary">connexion</Button>
                 <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
 
             </Col>
-            </Row>
-        // </Form>
+          </div>
     )
     }else{
         console.log('avatar')
         return (
-            <Container>
-              <Col>
+              <Col xs='1' sm='2'>
                 <img 
                   src={user.avatar} 
                   className='navBarAvatar'
                   onClick={ ()=> setClickAvatar(true)}
                 />
               </Col>
-            </Container>
 
         )
     }
