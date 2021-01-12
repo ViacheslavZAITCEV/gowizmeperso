@@ -8,9 +8,7 @@ import { Form, Label } from "reactstrap";
 
 
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Container, Row, Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 

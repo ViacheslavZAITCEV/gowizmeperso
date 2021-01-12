@@ -5,8 +5,8 @@ import {
   Badge,
 } from 'reactstrap';
 
-import Container from 'react-bootstrap/Container'
-import {Row, Col} from 'reactstrap'
+import {Container, Row, Col} from 'reactstrap'
+
 
 import { connect } from 'react-redux';
 
