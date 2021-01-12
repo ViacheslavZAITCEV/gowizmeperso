@@ -91,12 +91,14 @@ function Profil (props){
 
   function changePrefs(pref){
     var pfs = props.user.preferences;
-    console.log('ProfilPage.changePrefs()  pfs=', pfs);
-    console.log('ProfilPage.changePrefs()  pref=', pref);
+    // console.log('ProfilPage.changePrefs()  pfs=', pfs);
+    // console.log('ProfilPage.changePrefs()  pref=', pref);
     pfs[0][pref] = ! pfs[0][pref];
     console.log('ProfilPage.changePrefs()  pfs=', pfs);
-    props.user.preferences = pfs;
+    var newUser = props.user;
+    newUser.preferences = pfs;
     setPrefsUser(pfs);
+    setUser(newUser)
     updateBD(`/users/updatePrefs`, 'preferences', JSON.stringify(pfs));
   }
 

@@ -111,9 +111,6 @@ function MainPage (props){
 
 function mapDispatchToProps(dispatch) {
     return {
-      addToken: function (token) {
-        dispatch({ type: 'saveToken', token });
-      },
       setUser: function (user) {
         dispatch({ type: 'user', user: user });
       },
@@ -122,7 +119,6 @@ function mapDispatchToProps(dispatch) {
   
   function mapStateToProps(state) {
     return {
-      token: state.tokenReducer,
       user : state.userReducer,
       currentCity: state.currentCityReducer
     }
