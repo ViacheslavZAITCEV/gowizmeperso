@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux';
 
 import {Container, Row, Col, } from 'reactstrap'
-import { Card } from 'antd';
+import { Card, DatePicker, Space  } from 'antd';
 
 import NavbarGwm from './NavbarGwm'
 import { Redirect } from "react-router-dom";
@@ -12,6 +12,10 @@ function Evenement (props){
 
     const [user, setUser] = useState(props.user);
     const [event, setEvent] = useState(props.event);
+    const [lieu, setLieu] = useState(null);
+    const [date, setDate] = useState(null);
+    const [creneau, setCreneau] = useState(null);
+
 
 
     console.log ('Evenement page, props=', props);
@@ -20,6 +24,10 @@ function Evenement (props){
     //       }
     // },[])
 
+    function choixDate (date, dateString){
+        console.log ('date=', date)
+        console.log ('dateString=', dateString)
+    }
 
     if (props.event === null){
         return(
@@ -34,9 +42,10 @@ function Evenement (props){
         <Container>
             <NavbarGwm/>
 
+                {event.nom}
             <Row>
                 {console.log('event=', props.event)}
-                <Col sm='6'>
+                <Col xs='12' sm='6'>
                     <Card
                         cover={
                             <img
@@ -52,11 +61,14 @@ function Evenement (props){
                             // alignitems: center,
                             // justifycontent: center,
                         }}>
-                        Evenement
+                        
                     </Card>
                 </Col>
-                <Col sm='6'>
-                        TextArea
+                <Col xs='12' sm='6'>
+                        {event.description}
+                        <Space direction="vertical">
+                            <DatePicker onChange={ choixDate } />
+                        </Space>
                 </Col>
             </Row>
             

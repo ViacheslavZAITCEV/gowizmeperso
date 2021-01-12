@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import {Redirect} from 'react-router-dom'
 import '../../App.css';
-import {
-  Button,  Label, Input,
+import {Button} from 'antd';
 
+
+import { 
+  Label, Input,
+  Container, Row, Col
 } from 'reactstrap';
-
-
-
-import {Container, Row, Col} from 'reactstrap'
 
 
 
@@ -92,16 +91,16 @@ function Perso(props) {
     if ( user.avatar === undefined){
         return(
           <div className="Sign">/
-            <Col xs="4" sm="3" md="3" lg="2" xl="1">
+            <div>
                 <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
                 <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
                 <Label style={{color : 'white'}}>{errSignIn}</Label> 
-            </Col>
-            <Col xs="2" sm="1" md="1" lg="1" xl="1">
+            </div>
+            <div >
                 <Button onClick={ ()=> loginFE() } className="Login-input" type="primary">connexion</Button>
                 <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
 
-            </Col>
+            </div>
           </div>
     )
     }else{

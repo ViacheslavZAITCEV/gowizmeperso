@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import {Link, Redirect} from 'react-router-dom'
 import '../App.css';
 import {
-  Navbar, Label,
+  Navbar, Label, 
 } from 'reactstrap';
-
+import {Button} from 'antd';
 
 
 import {Container, Row, Col} from 'reactstrap'
@@ -19,8 +19,11 @@ import Perso from './components/Perso';
 
 function NavbarGwm(props) {
 
-  const [user, setUser] = useState(props.user);
-  const [token, setToken] = useState(props.token);
+  const [evenement, setEvenement] = useState(false);
+  const [planing, setPlaning] = useState(false);
+  const [amis, setAmis] = useState(false);
+  const [find, setFind] = useState(false);
+
   const [login, setLogin] =useState('');
   const [pass, setPass] =useState('');
   const [confpass, setConfPass] =useState('');
@@ -28,69 +31,77 @@ function NavbarGwm(props) {
   const [errSignIn, setErrSignIn] = useState('');
   const [toProfil, setToProfil] = useState(false);
 
-  if (toProfil){
+  if (evenement){
+    return(
+      <Redirect to='/' />
+    )
+  } else   if (planing){
+    return(
+      <Redirect to='/' />
+    )
+  } else   if (amis){
+    return(
+      <Redirect to='/' />
+    )
+  } else  if (find){
+    return(
+      <Redirect to='/' />
+    )
+  } else  if (toProfil){
     return(
       <Redirect to='Profil' />
     )
-  }else{
+  } else{
 
   
 
     return (
-      <Container >
-          <Navbar color="light" bg='#000000' light expand="md">
+      <Navbar color="light" bg='#000000' light expand="md">
+          <Container >
 
             <Row className='navbargowizme'>
               <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                  <Link 
-                    to='/'
+                  <Button 
+                    onClick={ ()=> setEvenement(true) }
                     className='navBarBtn'
                     >
                     évènements
-                  </Link>
+                  </Button>
               </Col>
               <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                  <Link 
-                    to='/'
+                  <Button 
+                    onClick={ ()=> setPlaning(true) }
                     className='navBarBtn'
                   >
                     planning
-                  </Link>
+                  </Button>
               </Col>
               <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                 <Link 
-                    to='/'
+                 <Button 
+                    onClick={ ()=> setAmis(true) }
                     className='navBarBtn'
                   >
                     amis
-                  </Link>
+                  </Button>
 
               </Col>
               <Col xs="2" sm="1" md="1" lg="1" xl="1">
 
-                  <Link 
-                    to='/'
+                  <Button 
+                    onClick={ ()=> setFind(true) }
                     className='navBarBtn'
                   >
                     find
-                  </Link>
+                  </Button>
               </Col>
-              <Col xs="2" sm="1" md="1" lg="1" xl="1">
 
-
-                  <Link 
-                    // onClick={ ()=> { setToProfil(true) }}
-                    to='Profil'
-                    className='navBarBtn'
-                    >
-                    profil
-                  </Link>
+              <Col  xs="4" >
+                <Perso/>
               </Col>
-              <Perso/>
 
             </Row>
-          </Navbar>
-      </Container>
+        </Container>
+      </Navbar>
     );
   }
 }
