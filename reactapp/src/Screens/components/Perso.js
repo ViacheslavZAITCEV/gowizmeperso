@@ -77,6 +77,12 @@ function Perso(props) {
     return(
        <Redirect to='/newUser' />
     );
+  }else if (toMainPage){
+    console.log('click sign-in');
+    setToMainPage(false)
+    return(
+       <Redirect to='/' />
+    );
   }else{
 
 

@@ -53,33 +53,28 @@ function MainPage (props){
                   )
                 }else if (eventMap.type === 'théâtre'){
                   theatreCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
+
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                         >
                       </CardEvenement>
-                    </Col>
                   )
                 }else if (eventMap.type === 'exposition'){
                   expoCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                         >
                       </CardEvenement>
-                    </Col>
                   )
                 }else if (eventMap.type === 'concert'){
                   concertCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
                         item={i}   
                         >
                       </CardEvenement>
-                    </Col>
                   )
                 };
             }
@@ -99,9 +94,7 @@ function MainPage (props){
 
     return (
     <Container>
-      <Col>
-          <NavbarGwm/>
-      </Col>
+      <NavbarGwm/>
 
       <Row className='cardsRow' style={{ background:'#3C6382'}}>
         <Col

@@ -163,16 +163,6 @@ function CardEvenement(props){
     onClick={ ()=>{setEventChoix(props.event); setClickEvent(true)}}
   >
 
-      {/* <Heart
-        size={25}
-        token={props.token}      
-        i={i}
-        x={x}
-        user={user}
-        style={{ position: 'absolute', top: 5, left: 140 }}
-        navigation={props.navigation}
-      /> */}
-
     <Meta
       style={{ textAlign: 'center', fontWeight: 'bold', padding: 5, textTransform: 'uppercase' }}
       title = {props.event.nom}
