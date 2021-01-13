@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import {Link, Redirect} from 'react-router-dom'
 import '../App.css';
+
 import {
   Navbar, Label, 
+  Container, Row, Col,
 } from 'reactstrap';
-import {Button} from 'antd';
 
-
-import {Container, Row, Col} from 'reactstrap'
-
-
+import {Input, Button } from 'antd';
 
 import { connect } from 'react-redux';
 
-
 import Perso from './components/Perso';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+const { Search } = Input;
+
 
 
 function NavbarGwm(props) {
@@ -30,6 +33,9 @@ function NavbarGwm(props) {
   const [inscription, setInscription] =useState(false);
   const [errSignIn, setErrSignIn] = useState('');
   const [toProfil, setToProfil] = useState(false);
+
+
+  const onSearch = value => console.log(value);
 
   if (evenement){
     return(
@@ -58,7 +64,7 @@ function NavbarGwm(props) {
     return (
       <Navbar className='navbargowizme'>
 
-              <Col xs="2" >
+              <Col xs='3' md="2" >
                   <Link 
                     to='/'
                     className='navBarBtn'
@@ -66,13 +72,15 @@ function NavbarGwm(props) {
                     évènements
                   </Link>
               </Col>
-              <Col xs="2">
-              <Link 
-                to='/'
-                className='navBarBtn'
-              >
-                find
-              </Link>
+              <Col xs='4' md="4" className='NavBarInput'>
+                <Input type='text' onChange={ (e)=> setFind(e.target.value)} className="NavBarInput" placeholder='chercher' value={find}/>
+                <Button onClick={ ()=> find() } className="Login-input" >
+                  <FontAwesomeIcon icon={faSearch}
+                  color='#3C6382'
+                  />
+                </Button>
+
+
               </Col>
               {/* <Col xs="8" className='navBarAvatarCol'> */}
                 <Perso/>

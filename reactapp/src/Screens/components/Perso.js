@@ -90,7 +90,7 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
-          <div>
+          <Col xs='5'  md='6'>
             <div  className="Sign">
                 <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
                 <Button onClick={ ()=> loginFE() } className="Login-input" >connexion</Button>
@@ -102,13 +102,13 @@ function Perso(props) {
             <div  className="Sign">
                 <Label style={{color : 'white'}}>{errSignIn}</Label> 
             </div>
-          </div>
+          </Col>
     )
     }else{
         console.log('avatar')
         return (
-          <div className='navbarRow'>
-              <Col xs="2" sm="2" >
+          <Col xs='5'  md='6' className='navbarRow'>
+              <Col md="2">
                   <Link 
                     to='/'
                     className='navBarBtn'
@@ -116,7 +116,7 @@ function Perso(props) {
                     planning
                   </Link>
               </Col>
-              <Col xs="1" >
+              <Col md="2" >
                  <Link 
                     to='/'
                     className='navBarBtn'
@@ -126,7 +126,7 @@ function Perso(props) {
 
               </Col>
 
-              <Col xs='1' sm='2' className='navBarAvatarCol'>
+              <Col md='2' className='navBarAvatarCol'>
                 <img 
                   src={user.avatar} 
                   className='navBarAvatar'
@@ -134,7 +134,7 @@ function Perso(props) {
                   />
               </Col>
 
-                  </div>
+                  </Col>
         )
     }
   }
