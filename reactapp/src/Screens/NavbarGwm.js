@@ -3,11 +3,11 @@ import {Link, Redirect} from 'react-router-dom'
 import '../App.css';
 
 import {
-  Navbar, Label, 
+  Navbar, Label, Input, 
   Container, Row, Col,
 } from 'reactstrap';
 
-import {Input, Button } from 'antd';
+import {Button } from 'antd';
 
 import { connect } from 'react-redux';
 
@@ -26,6 +26,7 @@ function NavbarGwm(props) {
   const [planing, setPlaning] = useState(false);
   const [amis, setAmis] = useState(false);
   const [find, setFind] = useState(false);
+  const [search, setSearch] = useState('');
 
   const [login, setLogin] =useState('');
   const [pass, setPass] =useState('');
@@ -50,10 +51,14 @@ function NavbarGwm(props) {
       <Redirect to='/' />
     )
   } else  if (find){
+    console.log('on va chercher qqch avec search=', search);
+    setTimeout( ()=> setFind(false), 300);
+    setTimeout( ()=> setSearch(''), 300);
     return(
       <Redirect to='/' />
     )
   } else  if (toProfil){
+    setTimeout( ()=> setToProfil(false), 300);
     return(
       <Redirect to='Profil' />
     )
@@ -72,11 +77,21 @@ function NavbarGwm(props) {
                     évènements
                   </Link>
               </Col>
-              <Col xs='4' md="4" className='NavBarInput'>
-                <Input type='text' onChange={ (e)=> setFind(e.target.value)} className="NavBarInput" placeholder='chercher' value={find}/>
-                <Button onClick={ ()=> find() } className="Login-input" >
+              <Col xs='4' md="3" className='NavBarInput'>
+                <Input 
+                type='text' 
+                onChange={ (e)=> setSearch(e.target.value)} 
+                className="navbarSearhInput" 
+                placeholder='chercher' 
+                value={search}
+                />
+                <Button 
+                onClick={ ()=> setFind(true) } 
+                className="navbarSearhBtn" 
+                >
                   <FontAwesomeIcon icon={faSearch}
-                  color='#3C6382'
+                  style={{position: 'relative' }}
+                  color='white'
                   />
                 </Button>
 

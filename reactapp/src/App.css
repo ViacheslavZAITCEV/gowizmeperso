@@ -116,6 +116,22 @@
   color: #EFB509;
 }
 
+.navbarSearhInput{
+  border-radius: 6%;
+}
+.navbarSearhInput:hover {
+  color: #EFB509;
+}
+
+.navbarSearhBtn{
+  color: white;
+  background-color: #3C6382;
+  border-radius: 6%;
+}
+.navbarSearhBtn:hover {
+  color: #EFB509;
+}
+
 .navBarAvatarCol {
   display: flex;
   justify-content: right;

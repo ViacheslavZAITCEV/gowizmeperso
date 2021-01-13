@@ -66,19 +66,19 @@ function Perso(props) {
 
   if (clickAvatar){
     console.log('click avatar');
-    // setClickAvatar(false)
+    setTimeout( ()=> setClickAvatar(false), 300);
     return(
        <Redirect to='/Profil' />
     );
   }else if (signUp){
     console.log('click sign-up');
-    // setSignUp(false)
+    setTimeout( ()=> setSignUp(false), 300);
     return(
        <Redirect to='/newUser' />
     );
   }else if (toMainPage){
     console.log('click sign-in');
-    setToMainPage(false)
+    setTimeout( ()=> setToMainPage(false), 100);
     return(
        <Redirect to='/' />
     );
@@ -90,7 +90,7 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
-          <Col xs='5'  md='6'>
+          <Col xs='6'  md='5'>
             <div  className="Sign">
                 <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
                 <Button onClick={ ()=> loginFE() } className="Login-input" >connexion</Button>
@@ -107,7 +107,7 @@ function Perso(props) {
     }else{
         console.log('avatar')
         return (
-          <Col xs='5'  md='6' className='navbarRow'>
+          <Col xs='6'  md='6' className='navbarRow'>
               <Col md="2">
                   <Link 
                     to='/'
