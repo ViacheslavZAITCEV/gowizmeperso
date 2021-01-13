@@ -112,7 +112,9 @@ router.post('/sign-in', async function(req, res, next) {
     var email = req.body.email.toLowerCase();
     console.log('email = ', email);
     var userBD = await getUser({email})
-    console.log('userBD=', userBD);
+    // console.log('userBD=', userBD);
+    // console.log('req.body.password=', req.body.password);
+    // console.log('crypte(req.body.pass)=', SHA256(req.body.password + userBD.salt).toString(encBase64));
 
     if ( userBD == null ){
       response.error = 'email does not exist';
@@ -137,6 +139,7 @@ router.post('/sign-in', async function(req, res, next) {
         response.error = 'wrong password';
       }
     }
+    console.log('response=', response)
   res.json(response);
 });
 

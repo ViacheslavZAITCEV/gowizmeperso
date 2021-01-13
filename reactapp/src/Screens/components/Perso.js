@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Redirect} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import '../../App.css';
 import {Button} from 'antd';
 
@@ -34,7 +34,7 @@ function Perso(props) {
       var requet = {
         method : 'POST', 
         headers: {'Content-Type':'application/x-www-form-urlencoded'},
-        body : `email=${login}&pass=${pass}`
+        body : `email=${login}&password=${pass}`
       };
       var resultRAW = await fetch(`/users/sign-in`, requet);
       var result = await resultRAW.json();
@@ -72,7 +72,7 @@ function Perso(props) {
     );
   }else if (signUp){
     console.log('click sign-up');
-    setSignUp(false)
+    // setSignUp(false)
     return(
        <Redirect to='/newUser' />
     );
@@ -90,30 +90,51 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
-          <div className="Sign">/
-            <div>
+          <div>
+            <div  className="Sign">
                 <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
-                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
-                <Label style={{color : 'white'}}>{errSignIn}</Label> 
+                <Button onClick={ ()=> loginFE() } className="Login-input" >connexion</Button>
             </div>
-            <div >
-                <Button onClick={ ()=> loginFE() } className="Login-input" type="primary">connexion</Button>
-                <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
-
+            <div  className="Sign">
+                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
+              <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
+            </div>
+            <div  className="Sign">
+                <Label style={{color : 'white'}}>{errSignIn}</Label> 
             </div>
           </div>
     )
     }else{
         console.log('avatar')
         return (
-              <Col xs='1' sm='2'>
+          <div className='navbarRow'>
+              <Col xs="2" sm="2" >
+                  <Link 
+                    to='/'
+                    className='navBarBtn'
+                  >
+                    planning
+                  </Link>
+              </Col>
+              <Col xs="1" >
+                 <Link 
+                    to='/'
+                    className='navBarBtn'
+                  >
+                    amis
+                  </Link>
+
+              </Col>
+
+              <Col xs='1' sm='2' className='navBarAvatarCol'>
                 <img 
                   src={user.avatar} 
                   className='navBarAvatar'
                   onClick={ ()=> setClickAvatar(true)}
-                />
+                  />
               </Col>
 
+                  </div>
         )
     }
   }

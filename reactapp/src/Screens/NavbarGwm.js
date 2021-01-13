@@ -56,51 +56,28 @@ function NavbarGwm(props) {
   
 
     return (
-      <Navbar color="light" bg='#000000' light expand="md">
-          <Container >
+      <Navbar className='navbargowizme'>
 
-            <Row className='navbargowizme'>
-              <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                  <Button 
-                    onClick={ ()=> setEvenement(true) }
+              <Col xs="2" >
+                  <Link 
+                    to='/'
                     className='navBarBtn'
                     >
                     évènements
-                  </Button>
+                  </Link>
               </Col>
-              <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                  <Button 
-                    onClick={ ()=> setPlaning(true) }
-                    className='navBarBtn'
-                  >
-                    planning
-                  </Button>
+              <Col xs="2">
+              <Link 
+                to='/'
+                className='navBarBtn'
+              >
+                find
+              </Link>
               </Col>
-              <Col xs="2" sm="1" md="1" lg="1" xl="1">
-                 <Button 
-                    onClick={ ()=> setAmis(true) }
-                    className='navBarBtn'
-                  >
-                    amis
-                  </Button>
-
-              </Col>
-              <Col xs="2" sm="1" md="1" lg="1" xl="1">
-
-                  <Button 
-                    onClick={ ()=> setFind(true) }
-                    className='navBarBtn'
-                  >
-                    find
-                  </Button>
-              </Col>
-
-              <Col  xs="4" >
+              {/* <Col xs="8" className='navBarAvatarCol'> */}
                 <Perso/>
-              </Col>
+              {/* </Col> */}
 
-            </Row>
-        </Container>
       </Navbar>
     );
   }

@@ -51,17 +51,19 @@
 .navbargowizme  {
   display: flex;
   flex-direction: row;
+  background-color: #16253D;
+  margin: auto;
+}
+
+.navbarRow  {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: #16253D;
-  
+
 }
 
 .navBarBtn {
-  /* display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center; */
   color: white;
   margin: 1vw;
   padding-top: 1vh;
@@ -71,12 +73,15 @@
   background-color: #3C6382;
   border-radius: 10%;
 }
+.navBarBtn:hover {
+  color: #EFB509;
+}
 
 .Sign {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   /* margin: 1vw; */
 }
 
@@ -107,12 +112,15 @@
   margin-bottom : 0.3vh;
 
 }
+.Login-input:hover {
+  color: #EFB509;
+}
 
-.navBarAvatar {
+.navBarAvatarCol {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  justify-content: right;
+}
+.navBarAvatar {
   height: 8vh;
   border-radius: 100%;
   margin: 1vw;
@@ -164,6 +172,10 @@
   padding-right: 1vw;
   border-radius: 8%;
 }
+.button1 :hover {
+  color: #16253d;
+}
+
 .button2 {
   background-color: #dfe4ea;
   color: #D70026;
@@ -178,7 +190,9 @@
   padding-bottom: 1vh;
   border-radius: 8%;
 }
-
+.button2:hover {
+  color: #3C6382;
+}
 .badgeActiveType { 
   color: #dfe4ea;
   background-color: #3C6382;
@@ -217,3 +231,15 @@
   border-radius: 10%;
 }
 
+.newUser {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.newUserForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

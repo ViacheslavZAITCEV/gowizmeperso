@@ -316,11 +316,16 @@ function Profil (props){
         <Row> 
             {badges}
         </Row>
-        <Row 
-          className='button1'
-          onClick={ ()=> deconnecter()}
-        >
-          Deconecter        
+        <Row >
+          <Col xs="4" lg="2" xl="1">
+            <Button
+              className='button1'
+              onClick={ ()=> deconnecter()}
+              >
+                Deconecter        
+
+              </Button>
+          </Col>
         </Row>
       {/* </Col> */}
 
