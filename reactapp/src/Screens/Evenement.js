@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 
 import { connect } from 'react-redux';
 
-import {Container, Row, Col, } from 'reactstrap'
-import { Card, Dropdown, Button, Menu  } from 'antd';
+import {
+    Container, Row, Col, 
+} from 'reactstrap'
+import { Card, Menu, Dropdown, Button } from 'antd';
 
 import NavbarGwm from './NavbarGwm'
-import { Redirect } from "react-router-dom";
 
 
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
@@ -27,24 +29,42 @@ function Evenement (props){
     //       }
     // },[])
 
-    function handleMenuClick(e) {
+    function majLang(e) {
         // message.info('Click on menu item.');
         console.log('click', e);
     }
       
-    const menu = (
-        <Menu onClick={handleMenuClick}>
-          <Menu.Item key="1" >
-            1st menu item
-          </Menu.Item>
-          <Menu.Item key="2" >
-            2nd menu item
-          </Menu.Item>
-          <Menu.Item key="3" >
-            3rd menu item
-          </Menu.Item>
-        </Menu>
-    );
+    function menuLieu() {
+        return (
+          <Menu>
+            <Menu.Item onClick={() => majLang('')}>
+              All languages
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=en&')}>
+              English
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=fr&')}>
+              French
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=ru&')}>
+              Russian
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=de&')}>
+              Deutch
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=it&')}>
+              Italian
+            </Menu.Item>
+            <Menu.Item onClick={() => majLang('language=pt&')}>
+              Portugaise
+            </Menu.Item>
+          </Menu>
+        );
+      }
+
+
+
+
     if (props.event === null){
         return(
             <Redirect to='/' />
@@ -87,11 +107,14 @@ function Evenement (props){
                     <div>
                         {event.description}
                     </div>
-                    <Dropdown overlay={menu}>
+                    <Dropdown overlay={menuLieu}>
                         <Button>
-                            Button
+                            Lieux
                         </Button>
                     </Dropdown>
+                    {/* <Dropdown overlay={menuLang} placement="bottomLeft">
+                        <Button className="Drapeau">Language - {lang.substring(9,11)} <img src={`/images/${lang.substring(9,11)}.png`} ></img> </Button>
+                    </Dropdown> */}
 
                 </Col>
             </Row>
