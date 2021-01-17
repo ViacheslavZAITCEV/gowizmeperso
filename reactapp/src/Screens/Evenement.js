@@ -96,15 +96,35 @@ function Evenement (props){
       )
     }
 
-    function menuDate() {
-        return (
-          <Menu>
-            {dates}
-          </Menu>
-        );
+    function isDate1MoreDate2(date1, date2) {
+      var d1 = new Date(date1)
+      var day1 = d1.getDate();
+      // console.log('d1=', d1)
+      // console.log('day1=', day1)
+      // console.log('type of d1=', typeof d1);
+      // console.log('type of day1=', typeof day1);
+      var d2 = new Date(date2)
+      var day2 = d2.getDate();
+      // console.log('d2=',  d2);
+      // console.log('type of d2=', typeof d2);
+      // console.log('day2=', day2);
+      // console.log('type of day2=', typeof day2);
+      if (day1 > day2){
+        return true
+      }
+      return false;
       }
 
 
+      function ajouterAmis(){
+        if(user.avatar){
+          return (
+            <div>
+              On ajoute les amis ici
+            </div>
+          )
+        }
+      }
 
 
     if ( ! props.event || !event){
@@ -118,6 +138,7 @@ function Evenement (props){
 
 
       console.log ('tabLieuDates=', tabLieuDates)
+      console.log ('user=', user)
 
 
         return (
@@ -197,10 +218,8 @@ function Evenement (props){
                             >
                               {
                                 tabLieuDates[lieuCourant].map( (creneaux, j)=> {
-                                  console.log('creneaux=',creneaux);
-                                  var dateCourant= Date(creneaux);
-                                  if ( dateCourant > datePrecedent){
-                                  // if ( dateCourant.getDate() > datePrecedent.getDate()){
+                                  var dateCourant= new Date(creneaux);
+                                  if ( isDate1MoreDate2(dateCourant ,datePrecedent) ){
                                     datePrecedent = new Date (creneaux);
                                     return(
                                       <div>
@@ -220,9 +239,11 @@ function Evenement (props){
                                 })
                               }
                             </Radio.Group>
+                            <div>
+                              {ajouterAmis()}
+                            </div>
                             <Button className='button1' >
-                              Créer une sortie
-                              { user ? '' : "L'action demende de création du compte"}
+                              Créer une sortie { user.avatar ? '' : "  ( L'action demande de la création du compte) "}
                             </Button>
                           </TabPane>
                         )   

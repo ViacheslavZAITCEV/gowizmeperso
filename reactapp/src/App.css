@@ -282,8 +282,23 @@
   border-color: #dfe4ea;
   background-color: #E55039;
 }
+.inputText:focus {
+  color: #dfe4ea;
+  border-color: #dfe4ea;
+  background-color: #E55039;
+}
 .inputText:checked {
   color: #dfe4ea;
   border-color: #dfe4ea;
+  background-color: #17f561;
+}
+.inputText:active {
+  color: #EFB509;
+  border-color: #EFB509;
   background-color: #D70026;
+}
+.inputText::-ms-check {
+  color: #EFB509;
+  border-color: #EFB509;
+  background-color: #00ff15;
 }
