@@ -22,16 +22,17 @@ const { TabPane} = Tabs;
 
 function Evenement (props){
 
-    // const [user, setUser] = useState(props.user);
+    const [user, setUser] = useState(props.user);
     const [event, setEvent] = useState(props.event);
-    const [lieu, setLieu] = useState(null);
+    const [lieu, setLieu] = useState(props.event.lieux_dates[0].salle);
     const [date, setDate] = useState(null);
+    const [duree, setDuree] = useState(props.event.lieux_dates[0].duree);
     // const [creneau, setCreneau] = useState(null);
     
     const [tabLieu, setTabLieu] = useState([]);
     const [tabLieuDates, setTabLieuDate] = useState([]);
 
-    var datePrecedent;
+    var datePrecedent = new Date();
     
     useEffect( ()=> {
       const setLieuxDates = () =>{
@@ -49,17 +50,14 @@ function Evenement (props){
         }
 
         for (var i=0; i<tab.length; i++) {
-          console.log ( 'tab[i]=', tab[i] );
-          var addDate = dateFormat (tab[i].date_debut);
-          console.log ( 'addDate=', addDate);
+          // console.log ( 'tab[i]=', tab[i] );
+          var addDate = tab[i].date_debut;
+          // console.log ( 'addDate=', addDate);
           res[tab[i].salle].push(addDate);
         }
         console.log('res=', res);
         
         setTabLieuDate(res);
-        
-        datePrecedent = new Date(res[tl[0]].date_debut);
-        console.log('datePrecedent=', datePrecedent);
         
       };
       setLieuxDates();
@@ -119,13 +117,15 @@ function Evenement (props){
 
 
 
+      console.log ('tabLieuDates=', tabLieuDates)
 
 
         return (
         <Container>
             <NavbarGwm/>
-
+              <h3 className='titreEvent'>
                 {event.nom}
+              </h3>
             <Row>
                 <Col xs='12' sm='6'>
                     <Card
@@ -147,45 +147,83 @@ function Evenement (props){
                     </Card>
                 </Col>
                 <Col xs='12' sm='6'>
+                    <h4>
+                      Description:
+                    </h4>
                     <div>
-                        {event.description}
+                      {event.description}
+                    </div>
+                    <Divider />
+                    <h4>
+                      Détails d'évènement 
+                    </h4>
+                    <div>
+                      durée : {duree}
+                    </div>
+                    <div>
+                      Votre choix de lieu :  {lieu}
+                    </div>
+                    <div>
+                      Votre choix d'horaires : {date ? dateFormat(date) : '  --'}
                     </div>
 
                     <Divider />
 
-                    <Tabs defaultActiveKey="1" type="card" size='small'>{
+                    <Tabs 
+                    defaultActiveKey="0" 
+                    type="card" 
+                    size='small' 
+                    onChange={ (e)=> setLieu(tabLieu[e]) }
+                    // className='inputText'
+                    >
+                      {
                       tabLieu.map( (lieuCourant, i)=> {
-                        console.log('Evenement page, lieuCourant=', lieuCourant)
+
+                        console.log('Evenement page, lieuCourant=', lieuCourant);
+                        datePrecedent = Date(tabLieuDates[lieuCourant].date_debut);
+                        console.log('datePrecedent=', datePrecedent);
                         return (
                           <TabPane tab={lieuCourant} key={i}>
                             <p>
                               {lieuCourant}
                             </p>
-                            <Radio.Group defaultValue={i} style={{ margin: 16 }}>
+                            {/* <p>
+                              Adresse : {props.event.lieux_dates.salle[lieuCourant].adresse}
+                            </p> */}
+                            <Radio.Group 
+                            defaultValue={i} 
+                            style={{ margin: 16 }} 
+                            onChange={ (e)=> setDate( tabLieuDates[lieuCourant][e] ) }
+                            >
                               {
                                 tabLieuDates[lieuCourant].map( (creneaux, j)=> {
                                   console.log('creneaux=',creneaux);
-                                  var dateCourant= new Date (creneaux);
-                                  if ( dateCourant.getDate() > datePrecedent.getDate()){
+                                  var dateCourant= Date(creneaux);
+                                  if ( dateCourant > datePrecedent){
+                                  // if ( dateCourant.getDate() > datePrecedent.getDate()){
                                     datePrecedent = new Date (creneaux);
                                     return(
                                       <div>
                                         <Divider />
-                                        <Radio.Button value={j}>
-                                            {creneaux}
+                                        <Radio.Button value={j} className='inputText'>
+                                            {dateFormat(creneaux)}
                                         </Radio.Button>
                                       </div>
                                       )
                                   } else {
                                     return(
-                                      <Radio.Button value={j}>
-                                          {creneaux}
+                                      <Radio.Button value={j} className='inputText'>
+                                          {dateFormat(creneaux)}
                                        </Radio.Button>
                                       )    
                                   }
                                 })
                               }
                             </Radio.Group>
+                            <Button className='button1' >
+                              Créer une sortie
+                              { user ? '' : "L'action demende de création du compte"}
+                            </Button>
                           </TabPane>
                         )   
                       })
