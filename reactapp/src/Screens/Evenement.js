@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 
 import { connect } from 'react-redux';
@@ -6,58 +6,102 @@ import { connect } from 'react-redux';
 import {
     Container, Row, Col, 
 } from 'reactstrap'
-import { Card, Menu, Dropdown, Button } from 'antd';
+import { 
+  Card, 
+  Menu, Dropdown, 
+  Button,
+  Tabs,
+  Radio ,
+  Divider ,
+} from 'antd';
 
 import NavbarGwm from './NavbarGwm'
 
+const { TabPane} = Tabs;
 
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
 
 function Evenement (props){
 
-    const [user, setUser] = useState(props.user);
+    // const [user, setUser] = useState(props.user);
     const [event, setEvent] = useState(props.event);
     const [lieu, setLieu] = useState(null);
     const [date, setDate] = useState(null);
-    const [creneau, setCreneau] = useState(null);
+    // const [creneau, setCreneau] = useState(null);
+    
+    const [tabLieu, setTabLieu] = useState([]);
+    const [tabLieuDates, setTabLieuDate] = useState([]);
 
+    var datePrecedent;
+    
+    useEffect( ()=> {
+      const setLieuxDates = () =>{
+        var tab = props.event.lieux_dates;
+        var res = {};
+        var tl = [];
+        for (var i=0; i<tab.length; i++) {
+          tl.push(tab[i].salle);
+        }
+        tl = supprimerDoublons(tl);
+        setTabLieu(tl);
 
+        for (var i=0; i<tl.length; i++){
+          res[tl[i]]=[];
+        }
 
-    console.log ('Evenement page, props=', props);
+        for (var i=0; i<tab.length; i++) {
+          console.log ( 'tab[i]=', tab[i] );
+          var addDate = dateFormat (tab[i].date_debut);
+          console.log ( 'addDate=', addDate);
+          res[tab[i].salle].push(addDate);
+        }
+        console.log('res=', res);
+        
+        setTabLieuDate(res);
+        
+        datePrecedent = new Date(res[tl[0]].date_debut);
+        console.log('datePrecedent=', datePrecedent);
+        
+      };
+      setLieuxDates();
+    },[props.event])
 
-    // useEffect( ()=> {
-    //       }
-    // },[])
-
-    function majLang(e) {
-        // message.info('Click on menu item.');
-        console.log('click', e);
+    function supprimerDoublons (tab){
+      var tabNew = [];
+      var tabSet = new Set (tab);
+      tabNew = [...tabSet];
+      return tabNew;
     }
-      
-    function menuLieu() {
+
+    var dateFormat = function (date) {
+      var newDate = new Date(date);
+      var format;
+      if (newDate.getMinutes()<10) {
+        format = newDate.getDate() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getFullYear() + ' - ' + newDate.getHours() + 'h0' + newDate.getMinutes();
+      } else {
+        format = newDate.getDate() + '/' + (newDate.getMonth() + 1) + '/' + newDate.getFullYear() + ' - ' + newDate.getHours() + 'h' + newDate.getMinutes();
+      }
+      return format;
+    }
+
+
+
+
+    const dates = ()=> {
+      return (
+        props.event.lieux_dates.map( ()=> {
+          return (
+            <Menu.Item onClick={() => setDate(props.event.lieux_dates.date_debut)}>
+              {props.event.lieux_dates.date_debut}
+            </Menu.Item>
+          )   
+        })
+      )
+    }
+
+    function menuDate() {
         return (
           <Menu>
-            <Menu.Item onClick={() => majLang('')}>
-              All languages
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=en&')}>
-              English
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=fr&')}>
-              French
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=ru&')}>
-              Russian
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=de&')}>
-              Deutch
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=it&')}>
-              Italian
-            </Menu.Item>
-            <Menu.Item onClick={() => majLang('language=pt&')}>
-              Portugaise
-            </Menu.Item>
+            {dates}
           </Menu>
         );
       }
@@ -65,7 +109,7 @@ function Evenement (props){
 
 
 
-    if (props.event === null){
+    if ( ! props.event || !event){
         return(
             <Redirect to='/' />
         )
@@ -83,7 +127,6 @@ function Evenement (props){
 
                 {event.nom}
             <Row>
-                {console.log('event=', props.event)}
                 <Col xs='12' sm='6'>
                     <Card
                         cover={
@@ -107,14 +150,48 @@ function Evenement (props){
                     <div>
                         {event.description}
                     </div>
-                    <Dropdown overlay={menuLieu}>
-                        <Button>
-                            Lieux
-                        </Button>
-                    </Dropdown>
-                    {/* <Dropdown overlay={menuLang} placement="bottomLeft">
-                        <Button className="Drapeau">Language - {lang.substring(9,11)} <img src={`/images/${lang.substring(9,11)}.png`} ></img> </Button>
-                    </Dropdown> */}
+
+                    <Divider />
+
+                    <Tabs defaultActiveKey="1" type="card" size='small'>{
+                      tabLieu.map( (lieuCourant, i)=> {
+                        console.log('Evenement page, lieuCourant=', lieuCourant)
+                        return (
+                          <TabPane tab={lieuCourant} key={i}>
+                            <p>
+                              {lieuCourant}
+                            </p>
+                            <Radio.Group defaultValue={i} style={{ margin: 16 }}>
+                              {
+                                tabLieuDates[lieuCourant].map( (creneaux, j)=> {
+                                  console.log('creneaux=',creneaux);
+                                  var dateCourant= new Date (creneaux);
+                                  if ( dateCourant.getDate() > datePrecedent.getDate()){
+                                    datePrecedent = new Date (creneaux);
+                                    return(
+                                      <div>
+                                        <Divider />
+                                        <Radio.Button value={j}>
+                                            {creneaux}
+                                        </Radio.Button>
+                                      </div>
+                                      )
+                                  } else {
+                                    return(
+                                      <Radio.Button value={j}>
+                                          {creneaux}
+                                       </Radio.Button>
+                                      )    
+                                  }
+                                })
+                              }
+                            </Radio.Group>
+                          </TabPane>
+                        )   
+                      })
+                    }
+                    </Tabs>
+
 
                 </Col>
             </Row>

@@ -5,8 +5,8 @@ import {Button} from 'antd';
 
 
 import { 
-  Label, Input,
-  Container, Row, Col
+  Label, Input,  
+  Col
 } from 'reactstrap';
 
 
@@ -92,15 +92,36 @@ function Perso(props) {
         return(
           <Col xs='6'  md='5'>
             <div  className="Sign">
-                <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
-                <Button onClick={ ()=> loginFE() } className="Login-input" >connexion</Button>
+                <Input 
+                type='email' 
+                onChange={ (e)=> setLogin(e.target.value)} 
+                className="NavBarInput" 
+                placeholder='votre email' 
+                value={login}/>
+                <Button 
+                onClick={ ()=> loginFE() } 
+                className="navBarBtn" 
+                >
+                  connexion
+                </Button>
             </div>
             <div  className="Sign">
-                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
-              <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
+                <Input 
+                type='password' 
+                onChange={ (e)=> setPass(e.target.value)} 
+                className="NavBarInput" 
+                placeholder='votre mot de passe' 
+                value = {pass} 
+                />
+              <Button 
+              onClick={ ()=> setSignUp(true) }  
+              className='navBarBtn' 
+              >
+                Créer un compte
+              </Button>
             </div>
             <div  className="Sign">
-                <Label style={{color : 'white'}}>{errSignIn}</Label> 
+                <Label style={{color : '#EFB509'}}>{errSignIn}</Label> 
             </div>
           </Col>
     )
@@ -109,20 +130,22 @@ function Perso(props) {
         return (
           <Col xs='6'  md='6' className='navbarRow'>
               <Col md="2">
-                  <Link 
-                    to='/'
-                    className='navBarBtn'
-                  >
-                    planning
-                  </Link>
+              <Button
+                link 
+                href='/'
+                className='navBarBtn'
+              >
+                planning
+              </Button>
               </Col>
               <Col md="2" >
-                 <Link 
-                    to='/'
+                 <Button
+                    link 
+                    href='/'
                     className='navBarBtn'
                   >
                     amis
-                  </Link>
+                  </Button>
 
               </Col>
 

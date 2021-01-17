@@ -40,7 +40,7 @@ function MainPage (props){
     const inscrire = async ()=>{
       setErrSignUp('');
       console.log('inscription. Login=', loginSetup)
-      if (passSetup != confpass){
+      if (passSetup !== confpass){
         setErrSignUp('passwords ne sont pas identiques!');
       }else{
         var requet = {

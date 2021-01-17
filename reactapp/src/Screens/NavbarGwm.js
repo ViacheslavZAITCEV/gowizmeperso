@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import {Link, Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import '../App.css';
 
 import {
-  Navbar, Label, Input, 
-  Container, Row, Col,
+  Col, 
+  Navbar,  Input, 
+  // Button,
 } from 'reactstrap';
 
-import {Button } from 'antd';
+import { Button } from 'antd';
 
 import { connect } from 'react-redux';
 
@@ -16,41 +17,24 @@ import Perso from './components/Perso';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-const { Search } = Input;
+// const { Search } = Input;
 
 
 
 function NavbarGwm(props) {
 
-  const [evenement, setEvenement] = useState(false);
-  const [planing, setPlaning] = useState(false);
-  const [amis, setAmis] = useState(false);
+  // const [evenement, setEvenement] = useState(false);
+  // const [planing, setPlaning] = useState(false);
+  // const [amis, setAmis] = useState(false);
   const [find, setFind] = useState(false);
   const [search, setSearch] = useState('');
 
-  const [login, setLogin] =useState('');
-  const [pass, setPass] =useState('');
-  const [confpass, setConfPass] =useState('');
-  const [inscription, setInscription] =useState(false);
-  const [errSignIn, setErrSignIn] = useState('');
   const [toProfil, setToProfil] = useState(false);
 
 
-  const onSearch = value => console.log(value);
+  // const onSearch = value => console.log(value);
 
-  if (evenement){
-    return(
-      <Redirect to='/' />
-    )
-  } else   if (planing){
-    return(
-      <Redirect to='/' />
-    )
-  } else   if (amis){
-    return(
-      <Redirect to='/' />
-    )
-  } else  if (find){
+  if (find){
     console.log('on va chercher qqch avec search=', search);
     setTimeout( ()=> setFind(false), 300);
     setTimeout( ()=> setSearch(''), 300);
@@ -70,12 +54,13 @@ function NavbarGwm(props) {
       <Navbar className='navbargowizme'>
 
               <Col xs='3' md="2" >
-                  <Link 
-                    to='/'
+                  <Button 
+                    link
+                    href='/'
                     className='navBarBtn'
                     >
                     évènements
-                  </Link>
+                  </Button>
               </Col>
               <Col xs='4' md="3" className='NavBarInput'>
                 <Input 
@@ -87,7 +72,7 @@ function NavbarGwm(props) {
                 />
                 <Button 
                 onClick={ ()=> setFind(true) } 
-                className="navbarSearhBtn" 
+                className="navBarBtn" 
                 >
                   <FontAwesomeIcon icon={faSearch}
                   style={{position: 'relative' }}

@@ -10,7 +10,7 @@ import CardEvenement from "./components/CardEvenement";
 
 function MainPage (props){
 
-    const [user, setUser] = useState(null);
+    // const [user, setUser] = useState(null);
 
     const [cinema,setCinema] = useState([]);
     const [theatre,setTheatre] = useState([]);
@@ -45,6 +45,7 @@ function MainPage (props){
                   cinemaCards.push(
 
                       <CardEvenement
+                        key={i}
                         event={eventMap}
                         item={i}   
                         >
@@ -55,6 +56,7 @@ function MainPage (props){
                   theatreCards.push(
 
                       <CardEvenement
+                        key={i}
                         event={eventMap}
                         item={i}   
                         >
@@ -64,6 +66,7 @@ function MainPage (props){
                   expoCards.push(
                       <CardEvenement
                         event={eventMap}
+                        key={i}
                         item={i}   
                         >
                       </CardEvenement>
@@ -72,6 +75,7 @@ function MainPage (props){
                   concertCards.push(
                       <CardEvenement
                         event={eventMap}
+                        key={i}
                         item={i}   
                         >
                       </CardEvenement>

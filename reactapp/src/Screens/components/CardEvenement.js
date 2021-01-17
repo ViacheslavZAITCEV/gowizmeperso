@@ -5,7 +5,7 @@ import {Card} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
-import {Container, Row, Col} from 'reactstrap'
+import { Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
@@ -147,15 +147,22 @@ function CardEvenement(props){
     )
   }else{
 
+  var description;
+  if ( props.event.description.length < 70 ){
+    description = props.event.description;
+  } else {
+    description = props.event.description.substring(0,69)+'...';
+  }
+
+  
   return(
 
   <Col xs="12" sm="6" md="4" lg="4" xl="3" >
   <Card 
-  // key={i}
-  // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-    style={{ width: 220, height: 330 }}
+    style={{ width: 240, height: 440 }}
     cover={
       <img
+      style={{ width: 240, height: 300 }}
       alt={props.event.nom}
       src={props.event.image}
       />
@@ -164,24 +171,27 @@ function CardEvenement(props){
   >
 
     <Meta
-      style={{ textAlign: 'center', fontWeight: 'bold', padding: 5, textTransform: 'uppercase' }}
+      style={{
+        textAlign: 'center', 
+        padding: 5, 
+        fontWeight: 'bold', 
+        // textTransform: 'uppercase' 
+      }}
       title = {props.event.nom}
-      description = 'Une ville 200m.'
+      description = { `${description}`}
     >
       <div style={{ alignItems: 'center', margin: 2 }}>
-        {/* <Badge badgeStyle={{ backgroundColor: '#3C6382', margin: 1 }} value={props.event.categories[0]} /> */}
       </div>
     </Meta>
   </Card>
   <FontAwesomeIcon icon={faHeart}
-    // style={{position: 'inherit'}}
-    style={{position: 'relative', top: -320, left: 170, width: 20, height: 20 }}
+    style={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
     color='#D70026'
 
   />
   <FontAwesomeIcon icon={faHeart}
     // style={{position: 'inherit'}}
-    style={{position: 'relative', top: -322, left: 152 }}
+    style={{position: 'relative', top: -422, left: 182 }}
     color={ likeEventState } 
     // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
     // onPress={() => likeEvent(props.user, props.x)}
