@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Container, Row, Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
 import NavbarGwm from './NavbarGwm'
 import CardEvenement from "./components/CardEvenement";
 
+
 function MainPage (props){
 
-    const [user, setUser] = useState(null);
-    const [token, setToken] = useState(props.token);
+    const [user, setUser] = useState(props.user);
 
     const [cinema,setCinema] = useState([]);
     const [theatre,setTheatre] = useState([]);
     const [expo,setExpo] = useState([]);
     const [concert,setConcert] = useState([]);
-    
 
     useEffect( ()=> {
         async function chargeListEvent(){
@@ -46,43 +43,47 @@ function MainPage (props){
                 // console.log('i=', i, '  eventMap=', eventMap);
                 if (eventMap.type === 'film'){
                   cinemaCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
+
                       <CardEvenement
+                        key={i}
                         event={eventMap}
-                        item={i}   
-                      >
+                        // description={eventMap.description}
+                        item={i}
+                        sizeCard={{ width: 240, height: 440 }}
+                        sizeImg={{ width: 240, height: 300 }}
+                        styleHeartFond={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+                        styleHeart={{position: 'relative', top: -422, left: 182 }}
+                        >
                       </CardEvenement>
-                    </Col>
+
                   )
                 }else if (eventMap.type === 'théâtre'){
                   theatreCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
+
                       <CardEvenement
+                        key={i}
                         event={eventMap}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
-                    </Col>
                   )
                 }else if (eventMap.type === 'exposition'){
                   expoCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
+                        key={i}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
-                    </Col>
                   )
                 }else if (eventMap.type === 'concert'){
                   concertCards.push(
-                    <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                       <CardEvenement
                         event={eventMap}
+                        key={i}
                         item={i}   
-                      >
+                        >
                       </CardEvenement>
-                    </Col>
                   )
                 };
             }
@@ -101,26 +102,25 @@ function MainPage (props){
 
 
     return (
+      <div>
     <Container>
-      <Col>
-          <NavbarGwm/>
-      </Col>
+      <NavbarGwm/>
 
-      {/* {console.log('cinema=', cinema)} */}
-      <Row className='cardsRow'>
-        <div
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
+        <Col
             style={{
               fontSize: 22,
               margin: 7,
               fontWeight: 'bold'
             }}>
             CINEMA
-        </div>
+        </Col>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
           {cinema}
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow' style={{ background:'#E55039'}}>
         <div
             style={{
               fontSize: 22,
@@ -130,23 +130,11 @@ function MainPage (props){
             THEATRE
         </div>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#E55039'}}>
           {theatre}
       </Row>
-      <Row className='cardsRow'>
-        <div
-            style={{
-              fontSize: 22,
-              margin: 7,
-              fontWeight: 'bold'
-            }}>
-            CONCERTS
-        </div>
-      </Row>
-      <Row className='cardsRow'>
-          {concert}
-      </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow' style={{ background:'#F6E58D'}}>
         <div
             style={{
               fontSize: 22,
@@ -156,12 +144,28 @@ function MainPage (props){
             EXPOSITIONS
         </div>
       </Row>
-      <Row className='cardsRow'>
+      <Row className='cardsRow' style={{ background:'#F6E58D'}}>
           {expo}
+      </Row>
+      <Row className='cardsEspaceRow'></Row>
+      <Row className='cardsRow'  style={{ background:'#3C6382'}}>
+        <div
+            style={{
+              fontSize: 22,
+              margin: 7,
+              fontWeight: 'bold'
+            }}>
+            CONCERTS
+        </div>
+      </Row>
+      <Row className='cardsRow' style={{ background:'#3C6382'}}>
+          {concert}
       </Row>
 
     </Container>
+    </div>
     )
+  
 }
 
 
@@ -191,7 +195,6 @@ function mapDispatchToProps(dispatch) {
   
   function mapStateToProps(state) {
     return {
-      token: state.tokenReducer,
       user : state.userReducer,
       currentCity: state.currentCityReducer
     }

@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import {Redirect} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import '../../App.css';
-import {
-  Button,  Label, Input,
+import {Button} from 'antd';
 
+
+import { 
+  Label, Input,  
+  Col
 } from 'reactstrap';
-
-
-
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 
 
 
@@ -37,7 +34,7 @@ function Perso(props) {
       var requet = {
         method : 'POST', 
         headers: {'Content-Type':'application/x-www-form-urlencoded'},
-        body : `email=${login}&pass=${pass}`
+        body : `email=${login}&password=${pass}`
       };
       var resultRAW = await fetch(`/users/sign-in`, requet);
       var result = await resultRAW.json();
@@ -59,7 +56,7 @@ function Perso(props) {
         };
         props.setUser(user);
         setUser(user);
-        setToMainPage(true);
+        // setToMainPage(true);
       }else{
         setErrSignIn (result.error);
       }
@@ -69,15 +66,21 @@ function Perso(props) {
 
   if (clickAvatar){
     console.log('click avatar');
-    // setClickAvatar(false)
+    setTimeout( ()=> setClickAvatar(false), 300);
     return(
        <Redirect to='/Profil' />
     );
   }else if (signUp){
     console.log('click sign-up');
-    setSignUp(false)
+    setTimeout( ()=> setSignUp(false), 300);
     return(
        <Redirect to='/newUser' />
+    );
+  }else if (toMainPage){
+    console.log('click sign-in');
+    setTimeout( ()=> setToMainPage(false), 100);
+    return(
+       <Redirect to='/' />
     );
   }else{
 
@@ -87,38 +90,74 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
-        // <Form >
-            <Row className="Sign">/
-            <Col>
-                <Input type='email' onChange={ (e)=> setLogin(e.target.value)} className="NavBarInput" placeholder='votre email' value={login}/>
-                <Input type='password' onChange={ (e)=> setPass(e.target.value)} className="NavBarInput" placeholder='votre mot de passe' value = {pass} />
-                <Label style={{color : 'white'}}>{errSignIn}</Label> 
-            </Col>
-            <Col>
-                <Button onClick={ ()=> loginFE() } className="Login-input" type="primary">connexion</Button>
-                <Button onClick={ ()=> setSignUp(true) }  className='Login-input' >Créer un compte</Button>
-
-            </Col>
-            </Row>
-        // </Form>
+          <Col xs='6'  md='5'>
+            <div  className="Sign">
+                <Input 
+                type='email' 
+                onChange={ (e)=> setLogin(e.target.value)} 
+                className="NavBarInput" 
+                placeholder='votre email' 
+                value={login}/>
+                <Button 
+                onClick={ ()=> loginFE() } 
+                className="navBarBtn" 
+                >
+                  connexion
+                </Button>
+            </div>
+            <div  className="Sign">
+                <Input 
+                type='password' 
+                onChange={ (e)=> setPass(e.target.value)} 
+                className="NavBarInput" 
+                placeholder='votre mot de passe' 
+                value = {pass} 
+                />
+              <Button 
+              onClick={ ()=> setSignUp(true) }  
+              className='navBarBtn' 
+              >
+                Créer un compte
+              </Button>
+            </div>
+            <div  className="Sign">
+                <Label style={{color : '#EFB509'}}>{errSignIn}</Label> 
+            </div>
+          </Col>
     )
     }else{
         console.log('avatar')
         return (
-            <Container>
-              {/* <Col className='flex-col navBarName'>
-                Bonjour
-                {user.prenom}
-              </Col> */}
-              <Col>
+          <Col xs='6'  md='6' className='navbarRow'>
+              <Col md="2">
+              <Button
+                link 
+                href='/'
+                className='navBarBtn'
+              >
+                planning
+              </Button>
+              </Col>
+              <Col md="2" >
+                 <Button
+                    link 
+                    href='/'
+                    className='navBarBtn'
+                  >
+                    amis
+                  </Button>
+
+              </Col>
+
+              <Col md='2' className='navBarAvatarCol'>
                 <img 
                   src={user.avatar} 
                   className='navBarAvatar'
                   onClick={ ()=> setClickAvatar(true)}
-                />
+                  />
               </Col>
-            </Container>
 
+                  </Col>
         )
     }
   }
@@ -137,7 +176,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    token: state.tokenReducer,
     user : state.userReducer,
     currentCity: state.currentCityReducer
   }

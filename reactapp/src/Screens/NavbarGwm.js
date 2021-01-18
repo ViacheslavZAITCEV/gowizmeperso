@@ -1,93 +1,92 @@
 import React, { useState } from 'react';
-import {Link, Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import '../App.css';
+
 import {
-  Navbar, Label,
+  Col, 
+  Navbar,  Input, 
+  // Button,
 } from 'reactstrap';
 
-
-
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-
-
+import { Button } from 'antd';
 
 import { connect } from 'react-redux';
 
-
 import Perso from './components/Perso';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
+// const { Search } = Input;
+
 
 
 function NavbarGwm(props) {
 
-  const [user, setUser] = useState(props.user);
-  const [token, setToken] = useState(props.token);
-  const [login, setLogin] =useState('');
-  const [pass, setPass] =useState('');
-  const [confpass, setConfPass] =useState('');
-  const [inscription, setInscription] =useState(false);
-  const [errSignIn, setErrSignIn] = useState('');
+  // const [evenement, setEvenement] = useState(false);
+  // const [planing, setPlaning] = useState(false);
+  // const [amis, setAmis] = useState(false);
+  const [find, setFind] = useState(false);
+  const [search, setSearch] = useState('');
+
   const [toProfil, setToProfil] = useState(false);
 
-  if (toProfil){
+
+  // const onSearch = value => console.log(value);
+
+  if (find){
+    console.log('on va chercher qqch avec search=', search);
+    setTimeout( ()=> setFind(false), 300);
+    setTimeout( ()=> setSearch(''), 300);
+    return(
+      <Redirect to='/' />
+    )
+  } else  if (toProfil){
+    setTimeout( ()=> setToProfil(false), 300);
     return(
       <Redirect to='Profil' />
     )
-  }else{
+  } else{
 
   
 
     return (
-      <Container >
-          <Navbar color="light" bg='#000000' light expand="md">
+      <Navbar className='navbargowizme'>
 
-            <Row className='navbargowizme'>
-                  <Link 
-                    to='/'
+              <Col xs='3' md="2" >
+                  <Button 
+                    link
+                    href='/'
                     className='navBarBtn'
                     >
                     évènements
-                  </Link>
-
-                  
-                  <Link 
-                    to='/'
-                    className='navBarBtn'
-                  >
-                    planning
-                  </Link>
-
-
-                  <Link 
-                    to='/'
-                    className='navBarBtn'
-                  >
-                    mes amis
-                  </Link>
-
-
-                  <Link 
-                    to='/'
-                    className='navBarBtn'
-                  >
-                    find
-                  </Link>
+                  </Button>
+              </Col>
+              <Col xs='4' md="3" className='NavBarInput'>
+                <Input 
+                type='text' 
+                onChange={ (e)=> setSearch(e.target.value)} 
+                className="navbarSearhInput" 
+                placeholder='chercher' 
+                value={search}
+                />
+                <Button 
+                onClick={ ()=> setFind(true) } 
+                className="navBarBtn" 
+                >
+                  <FontAwesomeIcon icon={faSearch}
+                  style={{position: 'relative' }}
+                  color='white'
+                  />
+                </Button>
 
 
-                  <Link 
-                    // onClick={ ()=> { setToProfil(true) }}
-                    to='Profil'
-                    className='navBarBtn'
-                  >
-                    profil
-                  </Link>
+              </Col>
+              {/* <Col xs="8" className='navBarAvatarCol'> */}
+                <Perso/>
+              {/* </Col> */}
 
-                  <Perso/>
-
-            </Row>
-          </Navbar>
-      </Container>
+      </Navbar>
     );
   }
 }
@@ -110,7 +109,6 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    token: state.tokenReducer,
     user : state.userReducer,
     currentCity: state.currentCityReducer
   }

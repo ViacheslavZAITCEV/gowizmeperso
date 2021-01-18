@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
@@ -37,55 +39,38 @@
   }
 }
 
-.gowizme {
+.cardsRow {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  height:100vh;
-  background-image: url('https://us.123rf.com/450wm/zephyr18/zephyr181509/zephyr18150900028/44975226-nature-abstraite-arri%C3%A8re-plan-flou-dans-un-ton-bleu-turquoise-avec-un-soleil-%C3%A9clatant-des-reflets-et-un-.jpg?ver=6');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  justify-content: space-around;
 }
 
-.cardsRow {
-  display: flex;
-  /* flex-direction: row; */
-  /* align-items: center; */
-  /* justify-content: center; */
+.cardsEspaceRow{
+  margin: 3vw;
 }
 
 .navbargowizme  {
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   background-color: #16253D;
-  height: 10vh;
+  margin: auto;
 }
 
-.navBarBtn {
+.navbarRow  {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  color: white;
-  margin: 1vw;
-  padding-top: 1.5vh;
-  padding-bottom: 2vh;
-  padding-left: 2vw;
-  padding-right: 2vw;
-  background-color: #3C6382;
-  border-radius: 10%;
+  justify-content: space-between;
+
 }
 
 .Sign {
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
-  margin: 1vw;
+  align-items: center;
+  /* margin: 1vw; */
 }
 
 .NavBarInput {
@@ -108,33 +93,53 @@
   padding-right: 0.5vh;
   color: white;
   background-color: #3C6382;
-  border-radius: 3%;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 6%;
   margin-right: 1vw;
   margin-left: 1vw;
   margin-top : 0.3vh;
   margin-bottom : 0.3vh;
 
 }
+.Login-input:hover {
+  border-color: #EFB509;
+  background-color: #3C6382;
+}
 
-.navBarAvatar {
+.navbarSearhInput{
+  border-color: white;
+  border-width: 2px;
+  border-radius: 6%;
+}
+.navbarSearhInput:hover {
+  border-color: #EFB509;
+}
+
+.navBarBtn{
+  color: white;
+  background-color: #3C6382;
+  border-color: white;
+  border-width: 2px;
+  border-radius: 6%;
+}
+.navBarBtn:hover {
+  color: #EFB509;
+  border-color: #EFB509;
+  background-color: #3C6382;
+}
+
+.navBarAvatarCol {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  justify-content: right;
+}
+.navBarAvatar {
   height: 8vh;
   border-radius: 100%;
   margin: 1vw;
 }
 .navBarName {
   color: white;
-}
-
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .persoAvatar {
@@ -151,7 +156,7 @@
 .persoLine {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   margin-left: 1vw;
   margin-right: 1vw;
   margin-top: 1vh;
@@ -180,6 +185,12 @@
   padding-right: 1vw;
   border-radius: 8%;
 }
+.button1:hover {
+  color: #dfe4ea;
+  border-color: #dfe4ea;
+  background-color: #E55039;
+}
+
 .button2 {
   background-color: #dfe4ea;
   color: #D70026;
@@ -193,6 +204,9 @@
   padding-top: 1vh;
   padding-bottom: 1vh;
   border-radius: 8%;
+}
+.button2:hover {
+  color: #3C6382;
 }
 
 .badgeActiveType { 
@@ -233,3 +247,70 @@
   border-radius: 10%;
 }
 
+.newUser {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.newUserForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.titreEvent{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  color: #dfe4ea;
+  background-color: #E55039;
+  margin-top: 2vh;
+}
+
+.inputText{
+  color: #000000;
+  background-color: #f8f5f2;
+  border-color: #D70026;
+  margin-top: 0.5vh;
+  margin-left: 0.5vw;
+}
+.inputText:hover {
+  color: #dfe4ea;
+  border-color: #dfe4ea;
+  background-color: #E55039;
+}
+.inputText:focus {
+  color: #dfe4ea;
+  border-color: #dfe4ea;
+  background-color: #E55039;
+}
+.inputText:checked {
+  color: #dfe4ea;
+  border-color: #dfe4ea;
+  background-color: #17f561;
+}
+.inputText:active {
+  color: #EFB509;
+  border-color: #EFB509;
+  background-color: #D70026;
+}
+.inputText::-ms-check {
+  color: #EFB509;
+  border-color: #EFB509;
+  background-color: #00ff15;
+}
+
+.cadEventInEvenement{
+  width: 240;
+  height: 440;
+}
+.heartLike{
+ position: 'relative';
+ top: 10;
+ left: 120;
+ width: 20;
+ height: 20;
+}

@@ -8,9 +8,7 @@ import { Form, Label } from "reactstrap";
 
 
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Container, Row, Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
@@ -42,13 +40,13 @@ function MainPage (props){
     const inscrire = async ()=>{
       setErrSignUp('');
       console.log('inscription. Login=', loginSetup)
-      if (passSetup != confpass){
+      if (passSetup !== confpass){
         setErrSignUp('passwords ne sont pas identiques!');
       }else{
         var requet = {
           method : 'POST', 
           headers: {'Content-Type':'application/x-www-form-urlencoded'},
-          body : `email=${loginSetup}&pass=${passSetup}&nom=${nom}&prenom=${prenom}&ville=${ville}`
+          body : `email=${loginSetup}&password=${passSetup}&nom=${nom}&prenom=${prenom}&ville=${ville}`
         };
         try {
           var resultRAW = await fetch(`/users/sign-up`, requet);
@@ -72,8 +70,8 @@ function MainPage (props){
           <NavbarGwm/>
       </Col>
 
-      <Row className='cardsRow'>
-        <Form>
+      <Row className='newUser'>
+        <Form className='newUserForm'>
 
             <Input type='email' onChange={ (e)=> setLoginSetup(e.target.value)} className="NavBarInput" placeholder='votre email' value={loginSetup}/>
             <Input type='password' onChange={ (e)=> setPassSetup(e.target.value)} className="NavBarInput" placeholder='votre password' value = {passSetup} />
@@ -81,11 +79,11 @@ function MainPage (props){
             <Input type='text' onChange={ (e)=> setNom(e.target.value)} className="NavBarInput" placeholder='votre nom' value = {nom} />
             <Input type='text' onChange={ (e)=> setPrenom(e.target.value)} className="NavBarInput" placeholder='votre prénom' value = {prenom} />
             <Input type='text' onChange={ (e)=> setVille(e.target.value)} className="NavBarInput" placeholder='votre ville de recherche' value = {ville} />
-            <Button onClick={ ()=> inscrire() } className="Login-input" type="primary">Sign-up</Button>
+            <Button onClick={ ()=> inscrire() } className="button1 newUser" >Sign-up</Button>
+            <Label>{errSignUp}</Label> 
 
         </Form>
 
-        <Label>{errSignUp}</Label> 
 
       </Row>
 
@@ -113,9 +111,6 @@ function MainPage (props){
 
 function mapDispatchToProps(dispatch) {
     return {
-      addToken: function (token) {
-        dispatch({ type: 'saveToken', token });
-      },
       setUser: function (user) {
         dispatch({ type: 'user', user: user });
       },
@@ -124,7 +119,6 @@ function mapDispatchToProps(dispatch) {
   
   function mapStateToProps(state) {
     return {
-      token: state.tokenReducer,
       user : state.userReducer,
       currentCity: state.currentCityReducer
     }

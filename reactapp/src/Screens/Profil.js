@@ -5,9 +5,8 @@ import {
   Badge,
 } from 'reactstrap';
 
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+import {Container, Row, Col} from 'reactstrap'
+
 
 import { connect } from 'react-redux';
 
@@ -55,6 +54,7 @@ function Profil (props){
           keys.forEach( key => {
             if( typeof key === 'string' && key !== '_id' ){
               badgesTemp.push(
+                <Col xs="12" sm="6" md="4" lg="2" xl="1" >
                 <Badge
                   
                   key={compt++}
@@ -70,6 +70,7 @@ function Profil (props){
                   >
                 {key}
                 </Badge>
+                </Col>
               )
             }
           })
@@ -90,12 +91,14 @@ function Profil (props){
 
   function changePrefs(pref){
     var pfs = props.user.preferences;
-    console.log('ProfilPage.changePrefs()  pfs=', pfs);
-    console.log('ProfilPage.changePrefs()  pref=', pref);
+    // console.log('ProfilPage.changePrefs()  pfs=', pfs);
+    // console.log('ProfilPage.changePrefs()  pref=', pref);
     pfs[0][pref] = ! pfs[0][pref];
     console.log('ProfilPage.changePrefs()  pfs=', pfs);
-    props.user.preferences = pfs;
+    var newUser = props.user;
+    newUser.preferences = pfs;
     setPrefsUser(pfs);
+    setUser(newUser)
     updateBD(`/users/updatePrefs`, 'preferences', JSON.stringify(pfs));
   }
 
@@ -309,6 +312,7 @@ function Profil (props){
         {displayNom()}
         {displayPrenom()}
         {displayVille()}
+<<<<<<< HEAD
         Préférences:
         
 
@@ -329,6 +333,26 @@ function Profil (props){
           Deconecter        
         </Button>
     </div>
+=======
+        <Row> Préférences: </Row>
+        <Row> 
+            {badges}
+        </Row>
+        <Row >
+          <Col xs="4" lg="2" xl="1">
+            <Button
+              className='button1'
+              onClick={ ()=> deconnecter()}
+              >
+                Deconecter        
+
+              </Button>
+          </Col>
+        </Row>
+      {/* </Col> */}
+
+    </Container>
+>>>>>>> developpement
     )
  }
 }

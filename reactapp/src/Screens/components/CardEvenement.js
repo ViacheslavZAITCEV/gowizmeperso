@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
-// import React, {useState, useEffect} from 'react';
-import {Card} from 'antd';
-// import {Card, Badge} from 'antd';
+import React, {useState, useEffect} from 'react';
+import { Redirect } from "react-router-dom";
 
+import {Card} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart } from '@fortawesome/free-solid-svg-icons'
-// import Meta from 'antd/lib/card/Meta';
 
+import { Col} from 'reactstrap'
 
 import { connect } from 'react-redux';
 
@@ -103,6 +102,9 @@ function CardEvenement(props){
   // console.log ('props =', props)
   // console.log ('props.event =', props.event)
   
+  const [eventChoix, setEventChoix] = useState(null);
+  const [clickEvent, setClickEvent] = useState(false);
+
   const [likeEventState,setLikeEventState ] = useState ( '#FFFFFF' );
   // const [likeEventContourState,s etLikeEventContourState ] = useState ( '#D70026' );
 
@@ -133,62 +135,88 @@ function CardEvenement(props){
   //   upStateHeart();
   // }, [props.user])
 
+
+
+  if (clickEvent){
+    console.log('clickEvent');
+    console.log('event=', props.event);
+    props.newEvent(props.event);
+    // setClickEvent(false);
+    return(
+      <Redirect to='Evenement' />
+    )
+  }else{
+
+  var description;
+  if ( props.event.description.length < 70 ){
+    description = props.event.description;
+  } else {
+    description = props.event.description.substring(0,69)+'...';
+  }
+
+  
   return(
 
+  <Col xs="12" sm="6" md="4" lg="4" xl="3" >
   <Card 
-  // key={i}
-  // containerStyle={{ paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0, maxWidth: '47%', backgroundColor: '#F8F5F2' }}
-  cover={
-    <img
-    alt={props.event.nom}
-    src={props.event.image}
-    />
-  }
+    // className='cadEventInEvenement'
+    style={props.sizeCard}
+    cover={
+      <img
+      style={props.sizeImg}
+      alt={props.event.nom}
+      src={props.event.image}
+      />
+    }
+    onClick={ ()=>{setEventChoix(props.event); setClickEvent(true)}}
   >
+
+    <Meta
+      style={{
+        textAlign: 'center', 
+        padding: 5, 
+        fontWeight: 'bold', 
+        // textTransform: 'uppercase' 
+      }}
+      title = {props.event.nom}
+      description = { `${description}`}
+    >
+      <div style={{ alignItems: 'center', margin: 2 }}>
+      </div>
+    </Meta>
+  </Card>
   <FontAwesomeIcon icon={faHeart}
-    style={{position: 'relative', top: -265, left: 140 }}
+    style={props.styleHeartFond}
+    color='#D70026'
+    
+    />
+  <FontAwesomeIcon icon={faHeart}
+    // style={{position: 'inherit'}}
+    // className='heartLike'
+    style={props.styleHeart}
     color={ likeEventState } 
     // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
     // onPress={() => likeEvent(props.user, props.x)}
   />
+  </Col>
 
 
-      {/* <Heart
-        size={25}
-        token={props.token}      
-        i={i}
-        x={x}
-        user={user}
-        style={{ position: 'absolute', top: 5, left: 140 }}
-        navigation={props.navigation}
-      /> */}
+  )
+    }
+};
 
-    <Meta
-      style={{ textAlign: 'center', fontWeight: 'bold', padding: 5, textTransform: 'uppercase' }}
-      title = {props.event.nom}
-      description = 'Une ville 200m.'
-    >
-      <div style={{ alignItems: 'center', margin: 2 }}>
-        {/* <Badge badgeStyle={{ backgroundColor: '#3C6382', margin: 1 }} value={props.event.categories[0]} /> */}
-      </div>
-    </Meta>
-  </Card>
-
-
-)};
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAddIdEvent: function (idEvent) {
-      dispatch({ type: 'addIdEvent', idEvent: idEvent });
+    newEvent: function (evenement) {
+      dispatch({ type: 'evenement', evenement: evenement });
     },
   }
 }
 
 function mapStateToProps(state) {
   return {
-    token: state.tokenReducer,
     user : state.userReducer,
     currentCity: state.currentCityReducer
   }
