@@ -29,6 +29,9 @@ function NavbarGwm(props) {
   const [find, setFind] = useState(false);
   const [search, setSearch] = useState('');
 
+  const [toMainPage, setToMainPage] = useState(false);
+  const [toPlaning, setToPlaning] = useState(false);
+  const [toAmis, setToAmis] = useState(false);
   const [toProfil, setToProfil] = useState(false);
 
 
@@ -36,17 +39,27 @@ function NavbarGwm(props) {
 
   if (find){
     console.log('on va chercher qqch avec search=', search);
-    setTimeout( ()=> setFind(false), 300);
+    setTimeout( ()=> setFind(false), 100);
     setTimeout( ()=> setSearch(''), 300);
     return(
       <Redirect to='/' />
     )
-  } else  if (toProfil){
-    setTimeout( ()=> setToProfil(false), 300);
+  } else if (toMainPage){
+    setTimeout( ()=> setToMainPage(false), 100);
     return(
-      <Redirect to='Profil' />
+      <Redirect to='/' />
     )
-  } else{
+  } else if (toPlaning){
+    setTimeout( ()=> setToPlaning(false), 300);
+    return(
+      <Redirect to='/' />
+    )
+  } else if (toAmis){
+    setTimeout( ()=> setToAmis(false), 300);
+    return(
+      <Redirect to='/' />
+    )
+  } else {
 
   
 
@@ -55,8 +68,7 @@ function NavbarGwm(props) {
 
               <Col xs='3' md="2" >
                   <Button 
-                    link
-                    href='/'
+                    onClick={ ()=> setToMainPage(true) } 
                     className='navBarBtn'
                     >
                     évènements
