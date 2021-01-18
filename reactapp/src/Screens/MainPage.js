@@ -10,7 +10,7 @@ import CardEvenement from "./components/CardEvenement";
 
 function MainPage (props){
 
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(props.user);
 
     const [cinema,setCinema] = useState([]);
     const [theatre,setTheatre] = useState([]);

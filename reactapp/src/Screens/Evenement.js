@@ -27,12 +27,15 @@ function Evenement (props){
     const [event, setEvent] = useState(props.event);
     const [lieu, setLieu] = useState(props.event.lieux_dates[0].salle);
     const [date, setDate] = useState(null);
+    const [dateFin, setDateFin] = useState(null);
     const [duree, setDuree] = useState(props.event.lieux_dates[0].duree);
     const [adresse, setAdresse] = useState('')
     // const [creneau, setCreneau] = useState(null);
     
     const [tabLieu, setTabLieu] = useState([]);
     const [tabLieuDates, setTabLieuDate] = useState([]);
+    
+    const [toLogin, setToLogin] = useState(false);
 
     var datePrecedent = new Date();
     
@@ -46,18 +49,35 @@ function Evenement (props){
         }
         tl = supprimerDoublons(tl);
         setTabLieu(tl);
+        console.log ( 'tl=', tl );
 
+        // initialization des objets des salles
         for (var i=0; i<tl.length; i++){
-          res[tl[i]]=[];
+          // res[tl[i]]=[];
+          res[tl[i]] = {
+            salle : tab[i].salle,
+            adresse : tab[i].adresse,
+            cp : tab[i].cp,
+            creneaux : []
+          };
         }
+        console.log('res=', res);
 
         for (var i=0; i<tab.length; i++) {
           // console.log ( 'tab[i]=', tab[i] );
-          var addDate = tab[i].date_debut;
+          // console.log('i=',i, 'res[i]=', res[i]);
+          
+          res[ tab[i].salle ].creneaux.push({
+            date_debut: tab[i].date_debut,
+            date_fin: tab[i].date_fin,
+          });
+          // var addDate = tab[i].date_debut;
+          // res[tab[i].salle].push(addDate);
           // console.log ( 'addDate=', addDate);
-          res[tab[i].salle].push(addDate);
+
         }
-        // console.log('res=', res);
+        
+        console.log('res=', res);
         
         setTabLieuDate(res);
         
@@ -118,20 +138,7 @@ function Evenement (props){
     }
 
 
-    function creerSortie(){
-      var newSortie = {
-        evenementLie: ['events'],
-        organisateur: user,
-        nomSortie: event.nom,
-        image: event.image,
-        adresse: adresse,
-        cp: 'String',
-        date_debut: date,
-        date_fin: 'String',
-        duree: duree,
-        type: event.type,
-        participants: [user],
-      }
+    function creerSortie(newSortie){
 
       console.log('newSortie =', newSortie);
     }
@@ -143,7 +150,14 @@ function Evenement (props){
         return(
             <Redirect to='/' />
         )
+    }else 
+    if ( toLogin ){
+      setTimeout( ()=> setToLogin(false), 300);
+      return(
+          <Redirect to='/NewUser' />
+      )
     }else{
+      
         
 
 
@@ -202,7 +216,10 @@ function Evenement (props){
                     defaultActiveKey="0" 
                     type="card" 
                     size='small' 
-                    onChange={ (e)=> setLieu(tabLieu[e]) }
+                    onChange={ (e)=> {
+                      setLieu(tabLieu[e]); 
+                      
+                    }}
                     // className='inputText'
                     >
                       {
@@ -214,7 +231,7 @@ function Evenement (props){
                         return (
                           <TabPane tab={lieuCourant} key={i}>
                             <p>
-                              {lieuCourant}
+                              {tabLieu[lieuCourant]}
                             </p>
                             {/* <p>
                               Adresse : {props.event.lieux_dates.salle[lieuCourant].adresse}
@@ -225,14 +242,17 @@ function Evenement (props){
                             style={{ margin: 16 }} 
                             onChange={ (e)=> {
                               // console.log('e=',e);
-                              setDate( tabLieuDates[lieuCourant][e.target.value] ) 
+                              // console.log('tabLieuDates[lieuCourant].creneaux[e.target.value]=',tabLieuDates[lieuCourant].creneaux[e.target.value]);
+                              setDate( tabLieuDates[lieuCourant].creneaux[e.target.value].date_debut );
+                              setDateFin( tabLieuDates[lieuCourant].creneaux[e.target.value].date_fin );
+                              setAdresse (tabLieuDates[lieuCourant].adresse );
                             }}
                             >
                               {
-                                tabLieuDates[lieuCourant].map( (creneaux, j)=> {
-                                  var dateCourant= new Date(creneaux);
+                                tabLieuDates[lieuCourant].creneaux.map( (creneaux, j)=> {
+                                  var dateCourant= new Date(creneaux.date_debut);
                                   if ( isDate1MoreDate2(dateCourant ,datePrecedent) ){
-                                    datePrecedent = new Date (creneaux);
+                                    datePrecedent = new Date (creneaux.date_debut);
                                     return(
                                       <div>
                                         <Divider />
@@ -240,14 +260,14 @@ function Evenement (props){
                                         key={j}
                                         value={j} 
                                         className='inputText'>
-                                            {dateFormat(creneaux)}
+                                            {dateFormat(creneaux.date_debut)}
                                         </Radio.Button>
                                       </div>
                                       )
                                   } else {
                                     return(
                                       <Radio.Button value={j} className='inputText'>
-                                          {dateFormat(creneaux)}
+                                          {dateFormat(creneaux.date_debut)}
                                        </Radio.Button>
                                       )    
                                   }
@@ -257,9 +277,25 @@ function Evenement (props){
                             <div>
                               {ajouterAmis()}
                             </div>
+                            
                             <Button 
                             className='button1' 
-                            onClick={ ()=> {creerSortie()}}
+                            onClick={ ()=> {
+                              console.log('click "créer sortie", creerSortie=', creerSortie);
+                              user.avatar ? creerSortie({
+                                evenementLie: [event._id],
+                                organisateur: user,
+                                nomSortie: event.nom,
+                                image: event.image,
+                                adresse: tabLieuDates[lieuCourant].adresse,
+                                cp: tabLieuDates[lieuCourant].cp,
+                                date_debut: date,
+                                date_fin: dateFin,
+                                duree: duree,
+                                type: event.type,
+                                participants: [user],
+                              }) : setToLogin(true);
+                            }}
                             >
                               Créer une sortie { user.avatar ? '' : "  ( L'action demande de la création du compte) "}
                             </Button>

@@ -56,7 +56,7 @@ function Perso(props) {
         };
         props.setUser(user);
         setUser(user);
-        setToMainPage(true);
+        // setToMainPage(true);
       }else{
         setErrSignIn (result.error);
       }
