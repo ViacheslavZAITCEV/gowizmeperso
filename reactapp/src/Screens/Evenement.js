@@ -13,6 +13,7 @@ import {
   Tabs,
   Radio ,
   Divider ,
+  Modal
 } from 'antd';
 
 import NavbarGwm from './NavbarGwm'
@@ -36,8 +37,13 @@ function Evenement (props){
     const [tabLieuDates, setTabLieuDate] = useState([]);
     
     const [toLogin, setToLogin] = useState(false);
+    const [toPlaning, setToPlaning] = useState(false);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [error, setError] = useState('');
 
     var datePrecedent = new Date();
+    var part;
     
     useEffect( ()=> {
       const setLieuxDates = () =>{
@@ -129,6 +135,7 @@ function Evenement (props){
 
     function ajouterAmis(){
       if(user.avatar){
+        part=user.token;
         return (
           <div>
             On ajoute les amis ici
@@ -138,9 +145,36 @@ function Evenement (props){
     }
 
 
-    function creerSortie(newSortie){
+    async function creerSortie(
+      idEvent,
+      token,
+      imageSortie,
+      nameSortie,
+      adresseSortie,
+      dateDebut,
+      dateFin,
+      codePostalSortie,
+      typeSortie,
+      dureeSortie,
+      invitedFriendsList
+    ){
 
-      console.log('newSortie =', newSortie);
+      var requet = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `evenementLie=${idEvent}&token=${token}&image=${imageSortie}&nomSortie=${nameSortie}&adresse=${adresseSortie}&date_debut=${dateDebut}&date_fin=${dateFin}&cp=${codePostalSortie}&type=${typeSortie}&duree=${dureeSortie}&part=${invitedFriendsList}`,
+      }
+      console.log('requet =', requet);
+      
+      const responseBE = await fetch('/addSortieToken', requet);
+      var res = await responseBE.json();
+      console.log('reponseBE =', res);
+      if (res.response){
+        setToPlaning(true);
+      }else{
+        setError(`L'enregistrement de la sortie était refusé`);
+        setModalVisible(true);
+      }
     }
 
 
@@ -150,13 +184,17 @@ function Evenement (props){
         return(
             <Redirect to='/' />
         )
-    }else 
-    if ( toLogin ){
-      setTimeout( ()=> setToLogin(false), 300);
+    }else if ( toLogin ){
+      setTimeout( ()=> setToLogin(false), 30);
       return(
           <Redirect to='/NewUser' />
       )
-    }else{
+    }else if ( toPlaning ){
+      setTimeout( ()=> setToPlaning(false), 100);
+      return(
+          <Redirect to='/' />
+      )
+    }else {
       
         
 
@@ -170,6 +208,17 @@ function Evenement (props){
         return (
         <Container>
             <NavbarGwm/>
+            {/* <Modal
+              visible={modalVisible}
+              title="Error"
+              footer={
+                <Button key="submit" type="primary" onClick={setModalVisible(false)}>
+                  Ok
+                </Button>
+              }
+            >
+              <p>{error}</p>
+            </Modal> */}
               <h3 className='titreEvent'>
                 {event.nom}
               </h3>
@@ -237,7 +286,7 @@ function Evenement (props){
                               Adresse : {props.event.lieux_dates.salle[lieuCourant].adresse}
                             </p> */}
                             <Radio.Group 
-                            key={i}
+                            key={i+20}
                             defaultValue={i} 
                             style={{ margin: 16 }} 
                             onChange={ (e)=> {
@@ -255,9 +304,9 @@ function Evenement (props){
                                     datePrecedent = new Date (creneaux.date_debut);
                                     return(
                                       <div>
-                                        <Divider />
+                                        <Divider key={i*100+j}/>
                                         <Radio.Button 
-                                        key={j}
+                                        key={i*200+j}
                                         value={j} 
                                         className='inputText'>
                                             {dateFormat(creneaux.date_debut)}
@@ -266,7 +315,10 @@ function Evenement (props){
                                       )
                                   } else {
                                     return(
-                                      <Radio.Button value={j} className='inputText'>
+                                      <Radio.Button
+                                      key={i*300+j}
+                                      value={j} 
+                                      className='inputText'>
                                           {dateFormat(creneaux.date_debut)}
                                        </Radio.Button>
                                       )    
@@ -281,20 +333,22 @@ function Evenement (props){
                             <Button 
                             className='button1' 
                             onClick={ ()=> {
-                              console.log('click "créer sortie", creerSortie=', creerSortie);
-                              user.avatar ? creerSortie({
-                                evenementLie: [event._id],
-                                organisateur: user,
-                                nomSortie: event.nom,
-                                image: event.image,
-                                adresse: tabLieuDates[lieuCourant].adresse,
-                                cp: tabLieuDates[lieuCourant].cp,
-                                date_debut: date,
-                                date_fin: dateFin,
-                                duree: duree,
-                                type: event.type,
-                                participants: [user],
-                              }) : setToLogin(true);
+                              console.log('click "créer sortie" ');
+                              user.avatar ? 
+                                creerSortie(
+                                  event._id,
+                                  user.token,
+                                  event.nom,
+                                  event.image,
+                                  tabLieuDates[lieuCourant].adresse,
+                                  date,
+                                  dateFin,
+                                  tabLieuDates[lieuCourant].cp,
+                                  event.type,
+                                  duree,
+                                  part,
+                                ) : 
+                                setToLogin(true);
                             }}
                             >
                               Créer une sortie { user.avatar ? '' : "  ( L'action demande de la création du compte) "}
@@ -308,7 +362,7 @@ function Evenement (props){
 
                 </Col>
             </Row>
-            
+
         </Container>
         )
     }

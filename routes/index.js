@@ -238,6 +238,148 @@ router.post('/addSortie', async function (req, res, next) {
 });
 
 
+router.post('/addSortieToken', async function (req, res, next) {
+  console.log('***********************')
+  console.log('route : /addSortieToken')
+  
+  // ZAITCEV:
+  // j'ajoute le parsing d'objet Body
+  // req.body = req.body.json();
+
+  var token = req.body.token;
+  var idEvenement;
+  var response = {response : false};
+  console.log('token=', token)
+
+  if (req.body.evenementLie == undefined) {
+    idEvenement = 0
+  } else {
+    idEvenement = req.body.evenementLie
+  }
+  
+  // ZAITCEV:
+  // j'ajoute ici le recherche id d'organisateur dans le BD par token
+  var organisateur;
+  try {
+    var userOrg = await userModel.findOne({token});
+    if(userOrg._id){
+      req.body.organisateur = userOrg._id;
+      console.log('Organisateur = ', userOrg)
+    }
+
+
+
+
+    if (req.body.part != undefined && req.body.part.length > 1) {
+      var participantsTokens = req.body.part.split(",");
+      console.log('participantsTokens=', participantsTokens);
+      var participantsUsers = await userModel.find({token}, participantsTokens);
+      console.log('participantsUsers=', participantsUsers);
+      var convives = participantsUsers.map ((user, i)=> user._id );
+      console.log('convives=', convives);
+
+      var newSortie = new sortieModel({
+        evenementLie: idEvenement,
+        organisateur: organisateur,
+        // organisateur: req.body.organisateur,
+        nomSortie: req.body.nomSortie,
+        image: req.body.image,
+        adresse: req.body.adresse,
+        cp: req.body.cp,
+        date_debut: req.body.date_debut,
+        date_fin: req.body.date_fin,
+        duree: req.body.duree,
+        type: req.body.type,
+        participants: convives
+      });
+
+    } else if (req.body.part != undefined && req.body.part.length == 1) {
+      var convives = userOrg._id;
+
+      var newSortie = new sortieModel({
+        evenementLie: idEvenement,
+        organisateur: organisateur,
+        // organisateur: req.body.organisateur,
+        nomSortie: req.body.nomSortie,
+        image: req.body.image,
+        adresse: req.body.adresse,
+        cp: req.body.cp,
+        date_debut: req.body.date_debut,
+        date_fin: req.body.date_fin,
+        duree: req.body.duree,
+        type: req.body.type,
+        participants: convives
+      });
+    } else {
+      var newSortie = new sortieModel({
+        evenementLie: idEvenement,
+        organisateur: organisateur,
+        // organisateur: req.body.organisateur,
+        nomSortie: req.body.nomSortie,
+        image: req.body.image,
+        adresse: req.body.adresse,
+        cp: req.body.cp,
+        date_debut: req.body.date_debut,
+        date_fin: req.body.date_fin,
+        duree: req.body.duree,
+        type: req.body.type,
+      });
+    }
+
+    var sortie = await newSortie.save();
+    console.log("SORTIE CREEE", newSortie)
+
+    // LE CREATEUR EST EGALEMENT UN PARTICIPANT (FACON DE RECHERCHER POUR L'ECRAN PLANIFIER), DONC ON LUI AJOUTE L'ID SORTIE DANS SES SORTIES ET IDEM POUR LES SORTIES, AJOUT DE L'ID CREATEUR
+    userModel.findOneAndUpdate(
+      {token},
+      { $push: { sorties: sortie._id } },
+      function (error, success) {
+        if (error) {
+          console.log("ERROR EVENT", error);
+        } else {
+          console.log("SUCCESS USER", success);
+        }
+      });
+
+    sortieModel.findOneAndUpdate(
+      { _id: sortie._id },
+      { $push: { participants: req.body.organisateur } },
+      function (error, success) {
+        if (error) {
+          console.log("ERROR EVENT", error);
+        } else {
+          console.log("SUCCESS PUSH AMIS SORTIE", success);
+        }
+      }
+    );
+
+    // POUR CHAQUE AMI, ON SE CONNECTE A SON PROFIL ET ON LUI AJOUTE L'ID DE LA SORTIE
+    if (convives) {
+      for (var idAmiSortie of convives) {
+        userModel.findOneAndUpdate(
+          { _id: idAmiSortie },
+          { $push: { sorties: sortie._id } },
+          function (error, success) {
+            if (error) {
+              console.log("ERROR EVENT", error);
+            } else {
+              console.log("SUCCESS AMIS", success);
+            }
+          });
+      }
+    }
+    response.response = true;
+    response.sortie = sortie;
+    
+
+  } catch (error) {
+    response.error = error;
+    console.log(error)
+  }
+  console.log('responseBE=', response)
+  res.json(response);
+});
+
 
 
 
