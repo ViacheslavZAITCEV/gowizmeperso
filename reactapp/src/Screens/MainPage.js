@@ -47,7 +47,12 @@ function MainPage (props){
                       <CardEvenement
                         key={i}
                         event={eventMap}
-                        item={i}   
+                        // description={eventMap.description}
+                        item={i}
+                        sizeCard={{ width: 240, height: 440 }}
+                        sizeImg={{ width: 240, height: 300 }}
+                        styleHeartFond={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+                        styleHeart={{position: 'relative', top: -422, left: 182 }}
                         >
                       </CardEvenement>
 

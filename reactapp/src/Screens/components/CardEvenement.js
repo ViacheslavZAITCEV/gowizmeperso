@@ -159,10 +159,11 @@ function CardEvenement(props){
 
   <Col xs="12" sm="6" md="4" lg="4" xl="3" >
   <Card 
-    style={{ width: 240, height: 440 }}
+    // className='cadEventInEvenement'
+    style={props.sizeCard}
     cover={
       <img
-      style={{ width: 240, height: 300 }}
+      style={props.sizeImg}
       alt={props.event.nom}
       src={props.event.image}
       />
@@ -185,13 +186,14 @@ function CardEvenement(props){
     </Meta>
   </Card>
   <FontAwesomeIcon icon={faHeart}
-    style={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+    style={props.styleHeartFond}
     color='#D70026'
-
-  />
+    
+    />
   <FontAwesomeIcon icon={faHeart}
     // style={{position: 'inherit'}}
-    style={{position: 'relative', top: -422, left: 182 }}
+    // className='heartLike'
+    style={props.styleHeart}
     color={ likeEventState } 
     // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
     // onPress={() => likeEvent(props.user, props.x)}

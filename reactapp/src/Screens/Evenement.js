@@ -16,6 +16,7 @@ import {
 } from 'antd';
 
 import NavbarGwm from './NavbarGwm'
+import CardEvenement from "./components/CardEvenement";
 
 const { TabPane} = Tabs;
 
@@ -27,6 +28,7 @@ function Evenement (props){
     const [lieu, setLieu] = useState(props.event.lieux_dates[0].salle);
     const [date, setDate] = useState(null);
     const [duree, setDuree] = useState(props.event.lieux_dates[0].duree);
+    const [adresse, setAdresse] = useState('')
     // const [creneau, setCreneau] = useState(null);
     
     const [tabLieu, setTabLieu] = useState([]);
@@ -55,7 +57,7 @@ function Evenement (props){
           // console.log ( 'addDate=', addDate);
           res[tab[i].salle].push(addDate);
         }
-        console.log('res=', res);
+        // console.log('res=', res);
         
         setTabLieuDate(res);
         
@@ -84,17 +86,6 @@ function Evenement (props){
 
 
 
-    const dates = ()=> {
-      return (
-        props.event.lieux_dates.map( ()=> {
-          return (
-            <Menu.Item onClick={() => setDate(props.event.lieux_dates.date_debut)}>
-              {props.event.lieux_dates.date_debut}
-            </Menu.Item>
-          )   
-        })
-      )
-    }
 
     function isDate1MoreDate2(date1, date2) {
       var d1 = new Date(date1)
@@ -113,18 +104,39 @@ function Evenement (props){
         return true
       }
       return false;
-      }
+    }
 
 
-      function ajouterAmis(){
-        if(user.avatar){
-          return (
-            <div>
-              On ajoute les amis ici
-            </div>
-          )
-        }
+    function ajouterAmis(){
+      if(user.avatar){
+        return (
+          <div>
+            On ajoute les amis ici
+          </div>
+        )
       }
+    }
+
+
+    function creerSortie(){
+      var newSortie = {
+        evenementLie: ['events'],
+        organisateur: user,
+        nomSortie: event.nom,
+        image: event.image,
+        adresse: adresse,
+        cp: 'String',
+        date_debut: date,
+        date_fin: 'String',
+        duree: duree,
+        type: event.type,
+        participants: [user],
+      }
+
+      console.log('newSortie =', newSortie);
+    }
+
+
 
 
     if ( ! props.event || !event){
@@ -137,8 +149,8 @@ function Evenement (props){
 
 
 
-      console.log ('tabLieuDates=', tabLieuDates)
-      console.log ('user=', user)
+      // console.log ('tabLieuDates=', tabLieuDates)
+      // console.log ('user=', user)
 
 
         return (
@@ -148,26 +160,21 @@ function Evenement (props){
                 {event.nom}
               </h3>
             <Row>
-                <Col xs='12' sm='6'>
-                    <Card
-                        cover={
-                            <img
-                            alt={props.event.nom}
-                            src={props.event.image}
-                            />
-                        }
-                        style={{
-                            height: 500,
-                            margin: 17,
-                            // display: flex,
-                            // flexdirection: row,
-                            // alignitems: center,
-                            // justifycontent: center,
-                        }}>
-                        
-                    </Card>
+                <Col xs='12' sm='12' md='6' lg='4' xl='4'
+                  className='cadEventInEvenement'
+                >
+                  <CardEvenement
+                  event={props.event}
+                  description={''}
+                  sizeCard={{ width: 300, height: 620 }}
+                  sizeImg={{ width: 300, height: 520 }}
+                  styleHeartFond={{position: 'relative', top: -600, left: 260, width: 20, height: 20 }}
+                  styleHeart={{position: 'relative', top: -602, left: 242 }}
+                  >
+                  </CardEvenement>
                 </Col>
-                <Col xs='12' sm='6'>
+                <Col xs='12' sm='12' md='6' lg='8' xl='8'
+                >
                     <h4>
                       Description:
                     </h4>
@@ -182,10 +189,11 @@ function Evenement (props){
                       durée : {duree}
                     </div>
                     <div>
-                      Votre choix de lieu :  {lieu}
+                      Votre choix de lieu :  
+                      {lieu}
                     </div>
                     <div>
-                      Votre choix d'horaires : {date ? dateFormat(date) : '  --'}
+                      Votre choix d'horaires : {date ? dateFormat(date) : ' --'}
                     </div>
 
                     <Divider />
@@ -200,9 +208,9 @@ function Evenement (props){
                       {
                       tabLieu.map( (lieuCourant, i)=> {
 
-                        console.log('Evenement page, lieuCourant=', lieuCourant);
+                        // console.log('Evenement page, lieuCourant=', lieuCourant);
                         datePrecedent = Date(tabLieuDates[lieuCourant].date_debut);
-                        console.log('datePrecedent=', datePrecedent);
+                        // console.log('datePrecedent=', datePrecedent);
                         return (
                           <TabPane tab={lieuCourant} key={i}>
                             <p>
@@ -212,9 +220,13 @@ function Evenement (props){
                               Adresse : {props.event.lieux_dates.salle[lieuCourant].adresse}
                             </p> */}
                             <Radio.Group 
+                            key={i}
                             defaultValue={i} 
                             style={{ margin: 16 }} 
-                            onChange={ (e)=> setDate( tabLieuDates[lieuCourant][e] ) }
+                            onChange={ (e)=> {
+                              // console.log('e=',e);
+                              setDate( tabLieuDates[lieuCourant][e.target.value] ) 
+                            }}
                             >
                               {
                                 tabLieuDates[lieuCourant].map( (creneaux, j)=> {
@@ -224,7 +236,10 @@ function Evenement (props){
                                     return(
                                       <div>
                                         <Divider />
-                                        <Radio.Button value={j} className='inputText'>
+                                        <Radio.Button 
+                                        key={j}
+                                        value={j} 
+                                        className='inputText'>
                                             {dateFormat(creneaux)}
                                         </Radio.Button>
                                       </div>
@@ -242,7 +257,10 @@ function Evenement (props){
                             <div>
                               {ajouterAmis()}
                             </div>
-                            <Button className='button1' >
+                            <Button 
+                            className='button1' 
+                            onClick={ ()=> {creerSortie()}}
+                            >
                               Créer une sortie { user.avatar ? '' : "  ( L'action demande de la création du compte) "}
                             </Button>
                           </TabPane>
