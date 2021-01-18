@@ -21,8 +21,9 @@ function Perso(props) {
   const [errSignIn, setErrSignIn] = useState('');
   const [clickAvatar, setClickAvatar] = useState(false);
   const [toMainPage, setToMainPage] = useState(false);
+  const [toPlaning, setToPlaning] = useState(false);
+  const [toAmis, setToAmis] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  
 
 
   const loginFE = async ()=>{
@@ -66,23 +67,32 @@ function Perso(props) {
 
   if (clickAvatar){
     console.log('click avatar');
-    setTimeout( ()=> setClickAvatar(false), 300);
+    setTimeout( ()=> setClickAvatar(false), 100);
     return(
        <Redirect to='/Profil' />
     );
   }else if (signUp){
     console.log('click sign-up');
-    setTimeout( ()=> setSignUp(false), 300);
+    setTimeout( ()=> setSignUp(false), 100);
     return(
        <Redirect to='/newUser' />
     );
-  }else if (toMainPage){
-    console.log('click sign-in');
+  } else if (toMainPage){
     setTimeout( ()=> setToMainPage(false), 100);
     return(
-       <Redirect to='/' />
-    );
-  }else{
+      <Redirect to='/' />
+    )
+  } else if (toPlaning){
+    setTimeout( ()=> setToPlaning(false), 100);
+    return(
+      <Redirect to='/' />
+    )
+  } else if (toAmis){
+    setTimeout( ()=> setToAmis(false), 100);
+    return(
+      <Redirect to='/' />
+    )
+  } else {
 
 
     console.log('Perso, user=', user);
@@ -131,8 +141,7 @@ function Perso(props) {
           <Col xs='6'  md='6' className='navbarRow'>
               <Col md="2">
               <Button
-                link 
-                href='/'
+                onClick={ ()=> setToPlaning(true) } 
                 className='navBarBtn'
               >
                 planning
@@ -140,8 +149,7 @@ function Perso(props) {
               </Col>
               <Col md="2" >
                  <Button
-                    link 
-                    href='/'
+                    onClick={ ()=> setToAmis(true) } 
                     className='navBarBtn'
                   >
                     amis
