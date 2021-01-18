@@ -312,7 +312,6 @@ function Profil (props){
         {displayNom()}
         {displayPrenom()}
         {displayVille()}
-<<<<<<< HEAD
         Préférences:
         
 
@@ -333,26 +332,6 @@ function Profil (props){
           Deconecter        
         </Button>
     </div>
-=======
-        <Row> Préférences: </Row>
-        <Row> 
-            {badges}
-        </Row>
-        <Row >
-          <Col xs="4" lg="2" xl="1">
-            <Button
-              className='button1'
-              onClick={ ()=> deconnecter()}
-              >
-                Deconecter        
-
-              </Button>
-          </Col>
-        </Row>
-      {/* </Col> */}
-
-    </Container>
->>>>>>> developpement
     )
  }
 }
