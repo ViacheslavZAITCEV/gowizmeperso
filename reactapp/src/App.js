@@ -8,6 +8,7 @@ import MainPage from './Screens/MainPage';
 import NewUser from './Screens/NewUser';
 import Profil from './Screens/Profil';
 import Evenement from './Screens/Evenement';
+import Amis from './Screens/Amis';
 
 import { Provider } from 'react-redux';
 import { combineReducers, createStore } from 'redux';
@@ -31,6 +32,7 @@ function App() {
           <Route component={Evenement} path="/Evenement" exact />
           <Route component={NewUser} path="/newUser" exact />
           <Route component={Profil} path="/Profil" exact />
+          <Route component={Amis} path="/Amis" exact />
         </Switch>
       </Router>
     </Provider>

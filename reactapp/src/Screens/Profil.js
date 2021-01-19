@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {Redirect} from 'react-router-dom'
 import {
-  Button,  Label, Input, 
+  Button,  
   Badge,
-} from 'reactstrap';
+} from 'antd';
 
-import {Container, Row, Col} from 'reactstrap'
+import {
+  Container, Row, Col,
+  Label, Input, 
+} from 'reactstrap'
 
 
 import { connect } from 'react-redux';
@@ -55,21 +58,21 @@ function Profil (props){
             if( typeof key === 'string' && key !== '_id' ){
               badgesTemp.push(
                 <Col xs="12" sm="6" md="4" lg="2" xl="1" >
-                <Badge
-                  
-                  key={compt++}
-                  pill
-                  className= {
-                    (prefs[key] === true ) 
-                    ?
-                    (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeActiveType' : 'badgeActiveCategory' 
-                    :
-                    (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeInactiveType' : 'badgeInactiveCategory'
-                  }
-                  onClick={ ()=> changePrefs(key)}
-                  >
-                {key}
-                </Badge>
+                  <Badge
+                    
+                    key={compt++}
+                    // pill
+                    className= {
+                      (prefs[key] === true ) 
+                      ?
+                      (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeActiveType' : 'badgeActiveCategory' 
+                      :
+                      (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeInactiveType' : 'badgeInactiveCategory'
+                    }
+                    onClick={ ()=> changePrefs(key)}
+                    >
+                  {key}
+                  </Badge>
                 </Col>
               )
             }
@@ -252,12 +255,17 @@ function Profil (props){
     if (!avatarChange){
       return(
         <Row >
-        <img
-          className='persoAvatar'
-          alt={user.nom}
-          src={avatar}
-          onClick={ ()=> {console.log('click avatar'); setAvatarChange(true)}}
-        />
+          <Col xs="12" sm="12" md="12" lg="12" xl="12">
+            <div className='flexRowCenter'>
+
+              <img
+                className='persoAvatar'
+                alt={user.nom}
+                src={avatar}
+                onClick={ ()=> {console.log('click avatar'); setAvatarChange(true)}}
+              />
+            </div>
+          </Col>
         </Row>
       )
     }else{
@@ -306,8 +314,15 @@ function Profil (props){
 
 
     return (
-      <div>
-      <NavbarGwm/>
+    <Container>
+        <NavbarGwm/>
+        <Row>
+          <Col xs='12'>
+          <h3 className='titreEvent'>
+            Mon profil
+          </h3>
+          </Col>
+        </Row>
         {displayAvatar()}
         {displayNom()}
         {displayPrenom()}
@@ -319,7 +334,20 @@ function Profil (props){
         <Row>
           <Col xs='12' sm='6' md='4'lg='2' >
             {badges}
-
+          </Col>
+        </Row>
+        <Row >
+          <Col xs="12">
+            <div
+            className='flexRowCenter'
+            >
+              <Button
+                className='button1'
+                onClick={ ()=> deconnecter()}
+                >
+                  Deconecter        
+              </Button>
+            </div>
           </Col>
         </Row>
         </Container>
@@ -331,7 +359,7 @@ function Profil (props){
         >
           Deconecter        
         </Button>
-    </div>
+    </Container>
     )
  }
 }

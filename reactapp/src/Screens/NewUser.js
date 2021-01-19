@@ -69,7 +69,11 @@ function MainPage (props){
       <Col>
           <NavbarGwm/>
       </Col>
-
+      <Row>
+        <h3 className='titreEvent'>
+          Inscription
+        </h3>
+      </Row>
       <Row className='newUser'>
         <Form className='newUserForm'>
 

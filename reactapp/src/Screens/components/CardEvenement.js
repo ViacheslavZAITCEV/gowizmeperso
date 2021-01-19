@@ -104,36 +104,67 @@ function CardEvenement(props){
   
   const [eventChoix, setEventChoix] = useState(null);
   const [clickEvent, setClickEvent] = useState(false);
+  const [toLogin, setToLogin] = useState(false);
 
-  const [likeEventState,setLikeEventState ] = useState ( '#FFFFFF' );
+  const [likeEventState,setLikeEventState ] = useState ( (props.user && isUserLikedEvent(props.user._id, props.event.popularite) ) ? '#D70026' : '#FFFFFF' );
   // const [likeEventContourState,s etLikeEventContourState ] = useState ( '#D70026' );
 
-  //   function isUserLikedEvent (u, popularite){
-//     console.log('isUserLikedEvent; popularite=', popularite);
-//     var result = false;
-//     if (u){
-//       var i=0;
-//       while ( !result &&  i < popularite.length){
-//         if (u == popularite[i]){
-//           result = true;
-//           console.log('User liked, index = ', i);
-//         }
-//         i++;
-//       }
-//     }
-//     console.log('result=', result);
-//     if ( result ){
-//       return  i-1;
-//     }
-//     return -1;
-//   }
 
-  // useEffect( ()=>{
-  //   const upStateHeart = ()=> {
-  //     setLikeEventState((props.user && props.event.popularite && isUserLikedEvent(props.user._id, props.event.popularite) !== -1 ) ? '#D70026' : '#FFFFFF')
-  //   }
-  //   upStateHeart();
-  // }, [props.user])
+    async function likeEvent(user, event){
+    
+    console.log("LIKÉ event", event._id);
+    
+    if ( ! user.avatar){
+      // console.log('props.navigation:', props.navigation);
+      setToLogin(true);
+    }else{
+      console.log("Heart : user.id=", user._id);
+
+      var responseBE;
+      var index = isUserLikedEvent(user._id, event.popularite); 
+
+      console.log ('analise likes: index=', index);
+      if (  index !== -1 ){
+        setLikeEventState( '#FFFFFF' );
+        event.popularite.splice(index, 1);
+        responseBE = await fetch(`/unlikeEvent?idEvent=${event._id}&idUser=${user._id}`);
+        console.log('Result: unLike event=', event._id, ' user=', user._id)
+      }else{
+        setLikeEventState( '#D70026' );
+        event.popularite.unshift(user._id);
+        responseBE = await fetch(`/likeEvent?idEvent=${event._id}&idUser=${user._id}`);
+        console.log('Result: Like event=', event._id, ' user=', user._id)
+      }
+      console.log(responseBE);
+    }
+  }
+
+    function isUserLikedEvent (u, popularite){
+    // console.log('isUserLikedEvent; popularite=', popularite);
+    var result = false;
+    if (u){
+      var i=0;
+      while ( !result &&  i < popularite.length){
+        if (u == popularite[i]){
+          result = true;
+          // console.log('User liked, index = ', i);
+        }
+        i++;
+      }
+    }
+    // console.log('result=', result);
+    if ( result ){
+      return  i-1;
+    }
+    return -1;
+  }
+
+  useEffect( ()=>{
+    const upStateHeart = ()=> {
+      setLikeEventState((props.user && props.event.popularite && isUserLikedEvent(props.user._id, props.event.popularite) !== -1 ) ? '#D70026' : '#FFFFFF')
+    }
+    upStateHeart();
+  }, [props.user])
 
 
 
@@ -145,7 +176,12 @@ function CardEvenement(props){
     return(
       <Redirect to='Evenement' />
     )
-  }else{
+  }else if(toLogin){
+    setTimeout(setToLogin(false), 50);
+    return (
+      <Redirect to='/NewUser' />
+    )
+  }else {
 
   var description;
   if ( props.event.description.length < 70 ){
@@ -195,8 +231,8 @@ function CardEvenement(props){
     // className='heartLike'
     style={props.styleHeart}
     color={ likeEventState } 
-    // color={ (props.user && isUserLikedEvent(props.user._id, props.x.popularite) ) ? '#D70026' : '#FFFFFF' } 
-    // onPress={() => likeEvent(props.user, props.x)}
+    // color={ (props.user && isUserLikedEvent(props.user._id, props.event.popularite) ) ? '#D70026' : '#FFFFFF' } 
+    onClick={() => likeEvent(props.user, props.event)}
   />
   </Col>
 
