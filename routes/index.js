@@ -512,7 +512,7 @@ router.post('/findDemandes', async function (req, res, next) {
   console.log("INDEX.JS, route: /findDemandes");
   console.log("req.body.token=", req.body.token);
 
-  var result = { status: false }
+  var result = { response: false }
 
   // try{
   var user = await userModel.findOne({ token: req.body.token });
@@ -548,7 +548,7 @@ router.post('/findDemandes', async function (req, res, next) {
 
 });
 
-// Route recherche les Demandes  d'amis 
+// Route acceptation d'une Demandes  d'amis 
 router.post('/accepteDemande', async function (req, res, next) {
 
   console.log();

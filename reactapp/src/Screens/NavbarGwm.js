@@ -57,7 +57,7 @@ function NavbarGwm(props) {
   } else if (toAmis){
     setTimeout( ()=> setToAmis(false), 300);
     return(
-      <Redirect to='/' />
+      <Redirect to='/Amis' />
     )
   } else {
 

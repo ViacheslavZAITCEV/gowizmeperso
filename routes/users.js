@@ -289,6 +289,118 @@ router.get('/delete', async function(req, res, next) {
 
 
 
+// Route rechercher les amis 
+router.post('/getAmis', async function (req, res, next) {
+  console.log();
+  console.log("users.js, route: /users/getAmis");
+  
+  var result = { response: false }
+
+  var token = req.body.token;
+  var amis = JSON.parse(req.body.amis);
+
+  var usersAmisTab = [];
+  try {
+    for (var ami of amis){
+      var userAmi = await users.findOne({token : ami});
+      usersAmisTab.push({
+        token : userAmi.token,
+        nom : userAmi.nom,
+        prenom : userAmi.prenom,
+        avatar : userAmi.avatar,
+        ville  : userAmi.ville,
+        preferences  : userAmi.preferences,
+        groupes  : userAmi.groupes,
+        favoris  : userAmi.favoris,
+        sorties  : userAmi.sorties,
+        amis  : userAmi.amis,
+        confidentialite  : userAmi.confidentialite,
+        age : userAmi.age,
+      });
+    }
+    console.log('usersAmisTab = ', usersAmisTab);
+    result.listeAmis = usersAmisTab;
+    result.response = true;
+  } catch (error) {
+    console.log('route: /users/getAmis. Cath.error= ', error)
+  }
+  res.json(result);
+})
+
+
+
+
+
+// Route recherche les Demandes  d'amis 
+router.post('/findDemandes', async function (req, res, next) {
+  
+  console.log();
+  console.log("users.js, route: /users/findDemandes");
+  console.log("req.body.token=", req.body.token);
+  
+  var result = { response: false }
+  
+  try{
+    var user = await users.findOne({ token: req.body.token });
+    var listeDesDemandes = await friendRequest.find({receveur:user._id});
+    console.log('listeDesDemandes=', listeDesDemandes)
+
+    var idDeMesDemandeurs = []
+    for (var listId of listeDesDemandes) {
+      idDeMesDemandeurs.push(listId.demandeur)
+    }
+    console.log("idDeMesDemandeurs", idDeMesDemandeurs)
+
+    var demandeurs = []
+    /*
+    var demandeurs = await users.findById(idDeMesDemandeurs);
+    */
+    for (var futursAmis of idDeMesDemandeurs) {
+      var liteDesDemandes = await users.findById(futursAmis)
+      demandeurs.push({
+        token : liteDesDemandes.token,
+        nom : liteDesDemandes.nom,
+        prenom : liteDesDemandes.prenom,
+        avatar : liteDesDemandes.avatar,
+        ville  : liteDesDemandes.ville,
+        preferences  : liteDesDemandes.preferences,
+        groupes  : liteDesDemandes.groupes,
+        favoris  : liteDesDemandes.favoris,
+        sorties  : liteDesDemandes.sorties,
+        amis  : liteDesDemandes.amis,
+        confidentialite  : liteDesDemandes.confidentialite,
+        age : liteDesDemandes.age,
+      });
+    }
+    console.log("demandeurs", demandeurs)
+    result.listeDemandesAmis = demandeurs;
+    result.response = true;
+  }catch(e){
+    result.error = e;
+    console.log(e);
+  }
+  console.log("result=",result);
+  console.log()
+
+  res.json(result);
+
+});
+
+
+
+
+
+
+
+
+// *************************************************
+
+
+
+
+
+
+
 
 /* -----------------  */
 /* GET users/getAllBD   */

@@ -6,6 +6,7 @@ import {Button} from 'antd';
 
 import { 
   Label, Input,  
+  Badge,
   Col
 } from 'reactstrap';
 
@@ -90,7 +91,7 @@ function Perso(props) {
   } else if (toAmis){
     setTimeout( ()=> setToAmis(false), 100);
     return(
-      <Redirect to='/' />
+      <Redirect to='/Amis' />
     )
   } else {
 
@@ -165,7 +166,7 @@ function Perso(props) {
                   />
               </Col>
 
-                  </Col>
+            </Col>
         )
     }
   }

@@ -39,6 +39,20 @@
   }
 }
 
+.flexCol{
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.flexRow{
+  display: flex;
+  flex-direction: row;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+
 .cardsRow {
   display: flex;
   flex-direction: row;
@@ -173,6 +187,10 @@
 }
 
 .button1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   background-color: #D70026;
   color: #dfe4ea;
   margin-left: 1vw;
@@ -192,6 +210,10 @@
 }
 
 .button2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   background-color: #dfe4ea;
   color: #D70026;
   border-radius: 5%;
@@ -208,7 +230,11 @@
 .button2:hover {
   color: #3C6382;
 }
-
+.button2:active {
+  color: #EFB509;
+  border-color: #EFB509;
+  background-color: #D70026;
+}
 .badgeActiveType { 
   color: #dfe4ea;
   background-color: #3C6382;
@@ -313,4 +339,15 @@
  left: 120;
  width: 20;
  height: 20;
+}
+
+.carouselEvents {
+  display: flex;
+}
+
+.freindsAvatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }

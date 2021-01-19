@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {Redirect} from 'react-router-dom'
 import {
-  Button,  Label, Input, 
+  Button,  
   Badge,
-} from 'reactstrap';
+} from 'antd';
 
-import {Container, Row, Col} from 'reactstrap'
+import {
+  Container, Row, Col,
+  Label, Input, 
+} from 'reactstrap'
 
 
 import { connect } from 'react-redux';
@@ -55,21 +58,21 @@ function Profil (props){
             if( typeof key === 'string' && key !== '_id' ){
               badgesTemp.push(
                 <Col xs="12" sm="6" md="4" lg="2" xl="1" >
-                <Badge
-                  
-                  key={compt++}
-                  pill
-                  className= {
-                    (prefs[key] === true ) 
-                    ?
-                    (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeActiveType' : 'badgeActiveCategory' 
-                    :
-                    (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeInactiveType' : 'badgeInactiveCategory'
-                  }
-                  onClick={ ()=> changePrefs(key)}
-                  >
-                {key}
-                </Badge>
+                  <Badge
+                    
+                    key={compt++}
+                    // pill
+                    className= {
+                      (prefs[key] === true ) 
+                      ?
+                      (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeActiveType' : 'badgeActiveCategory' 
+                      :
+                      (key === 'cinema' || key === 'theatre' || key === 'exposition' || key === 'concert') ? 'badgeInactiveType' : 'badgeInactiveCategory'
+                    }
+                    onClick={ ()=> changePrefs(key)}
+                    >
+                  {key}
+                  </Badge>
                 </Col>
               )
             }

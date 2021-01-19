@@ -50,7 +50,8 @@ function Evenement (props){
         var tab = props.event.lieux_dates;
         var res = {};
         var tl = [];
-        for (var i=0; i<tab.length; i++) {
+        var i;
+        for (i=0; i<tab.length; i++) {
           tl.push(tab[i].salle);
         }
         tl = supprimerDoublons(tl);
@@ -58,7 +59,7 @@ function Evenement (props){
         console.log ( 'tl=', tl );
 
         // initialization des objets des salles
-        for (var i=0; i<tl.length; i++){
+        for (i=0; i<tl.length; i++){
           // res[tl[i]]=[];
           res[tl[i]] = {
             salle : tab[i].salle,
@@ -69,7 +70,7 @@ function Evenement (props){
         }
         console.log('res=', res);
 
-        for (var i=0; i<tab.length; i++) {
+        for (i=0; i<tab.length; i++) {
           // console.log ( 'tab[i]=', tab[i] );
           // console.log('i=',i, 'res[i]=', res[i]);
           
@@ -164,11 +165,11 @@ function Evenement (props){
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `evenementLie=${idEvent}&token=${token}&image=${imageSortie}&nomSortie=${nameSortie}&adresse=${adresseSortie}&date_debut=${dateDebut}&date_fin=${dateFin}&cp=${codePostalSortie}&type=${typeSortie}&duree=${dureeSortie}&part=${invitedFriendsList}`,
       }
-      console.log('requet =', requet);
+      // console.log('requet =', requet);
       
       const responseBE = await fetch('/addSortieToken', requet);
       var res = await responseBE.json();
-      console.log('reponseBE =', res);
+      // console.log('reponseBE =', res);
       if (res.response){
         setToPlaning(true);
       }else{
