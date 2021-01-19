@@ -298,11 +298,13 @@ router.post('/getAmis', async function (req, res, next) {
 
   var token = req.body.token;
   var amis = JSON.parse(req.body.amis);
+  console.log ('amis=', amis);
 
   var usersAmisTab = [];
   try {
     for (var ami of amis){
-      var userAmi = await users.findOne({token : ami});
+      var userAmi = await getUser({token : ami});
+      console.log (userAmi);
       usersAmisTab.push({
         token : userAmi.token,
         nom : userAmi.nom,
@@ -322,7 +324,8 @@ router.post('/getAmis', async function (req, res, next) {
     result.listeAmis = usersAmisTab;
     result.response = true;
   } catch (error) {
-    console.log('route: /users/getAmis. Cath.error= ', error)
+    console.log('route: /users/getAmis. Cath.error= ', error);
+    result.error = error;
   }
   res.json(result);
 })
@@ -389,7 +392,91 @@ router.post('/findDemandes', async function (req, res, next) {
 
 
 
+// Route acceptation d'une Demandes  d'amis 
+router.post('/accepteDemande', async function (req, res, next) {
 
+  console.log();
+  console.log("users.JS, route: /accepteDemande");
+  console.log("req.body.token=", req.body.token);
+  console.log("req.body.tokenDemandeur=", req.body.tokenDemandeur);
+
+  var token = req.body.token;
+  var tokenAmi = req.body.tokenDemandeur;
+  var result = { status: false }
+
+  var ami = await getUser({token : req.body.tokenDemandeur});
+
+  try {
+
+    // update receveur
+    var idAmi = ami._id;
+    var userBD = await users.findOneAndUpdate(
+      { token },
+      { $push: { amis: tokenAmi } }
+    );
+    console.log('users.JS, route: /accepteDemande, userBD=',userBD);
+    
+    // update demandeur
+    var idUser = userBD._id;
+    var user2 = await users.findOneAndUpdate(
+      { token: tokenAmi },
+      { $push: { amis: token } }
+    );
+    console.log('users.JS, route: /accepteDemande, user2=',user2);
+      
+    var remove = await friendRequest.remove({ receveur: idUser, demandeur: idAmi });
+    console.log('users.JS, route: /accepteDemande, remove=',remove);
+
+    result.user = {
+      token : userBD.token,
+      nom : userBD.nom,
+      prenom :  userBD.prenom,
+      avatar : userBD.avatar,
+      ville  : userBD.ville,
+      preferences  : userBD.preferences,
+      groupes  : userBD.groupes,
+      favoris  : userBD.favoris,
+      sorties  : userBD.sorties,
+      amis  : userBD.amis,
+      confidentialite  : userBD.confidentialite,
+      age : userBD.age,
+    }
+    result.status = true;
+  } catch (e) {
+    result.error = e;
+    console.log(e);
+  }
+  console.log("result=", result);
+  console.log()
+
+  res.json(result);
+
+});
+
+// Route suppresion une Demande  d'amis 
+router.post('/delDemande', async function (req, res, next) {
+
+  console.log();
+  console.log("users.JS, route: /delDemande");
+  console.log("req.body.token=", req.body.token);
+
+  var idAmi = req.body.idDemandeur;
+  var result = { status: false }
+  try {
+    var user1 = await userModel.findOne({ token: req.body.token });
+    var idUser = user1._id;
+    result.response = await friendRequestModel.remove({ receveur: idUser, demandeur: idAmi })
+    result.status = true;
+  } catch (e) {
+    result.error = e;
+    console.log(e);
+  }
+  console.log("result=", result);
+  console.log()
+
+  res.json(result);
+
+});
 
 
 
@@ -588,6 +675,28 @@ router.get('/renderUsersAleatoires', async function(req, res, next) {
 //   var reponse = await users.updateMany({ville : 'Paris'}, amisParis);
 //   res.json(reponse);
 // });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //--------------------------------------------------

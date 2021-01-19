@@ -552,8 +552,9 @@ router.post('/findDemandes', async function (req, res, next) {
 router.post('/accepteDemande', async function (req, res, next) {
 
   console.log();
-  console.log("INDEX.JS, route: /findDemandes");
+  console.log("INDEX.JS, route: /accepteDemande");
   console.log("req.body.token=", req.body.token);
+  console.log("req.body.tokenDemandeur=", req.body.tokenDemandeur);
 
   var idAmi = req.body.idDemandeur;
   var result = { status: false }

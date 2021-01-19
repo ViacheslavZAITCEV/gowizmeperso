@@ -210,7 +210,10 @@ function Amis (props){
               <Col xs='6' sm='3' md='3' lg='2' xl='2'>
                 <Button
                   className='button1'
-                  onClick={ ()=> {console.log('click button accepter')}}
+                  onClick={ ()=> {
+                    console.log('click button accepter');
+                    acceptationDemande(ami);
+                  }}
                   >
                     accepter
                 </Button>
@@ -260,7 +263,7 @@ function Amis (props){
                     const data = await fetch(`/demandeFriend`, {
                       method: 'POST',
                       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                      body: `token=${user.token}&idAmi=${ami._id}`
+                      body: `token=${user.token}&tokenAmi=${ami.token}`
                     });
                 
                     const body = await data.json()
@@ -324,6 +327,33 @@ function Amis (props){
     const body = await data.json()
     console.log('Demande ami. responseBE =', body)
 */
+  }
+
+
+  async function acceptationDemande(ami){
+    console.log('Amis.acceptationDemande(), ami=', ami);
+
+    var amiToken=ami.token;
+    console.log('Amis.acceptationDemande(), amiToken=', amiToken);
+    try {
+      const data = await fetch(`/users/accepteDemande`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `token=${user.token}&tokenDemandeur=${amiToken}`
+      });
+      var resBD = await data.json();
+      console.log('resBD.status=', resBD.status);
+      console.log()
+      if (resBD.status) {
+
+        setUser(resBD.user);
+        props.setUser(user);
+
+      }
+    } catch (e) {
+      console.log('function accepteDemande, error:', e)
+    }
+
   }
 
 
@@ -516,9 +546,9 @@ function Amis (props){
 
 function mapDispatchToProps(dispatch) {
     return {
-        newEvent: function (evenement) {
-            dispatch({ type: 'evenement', evenement: evenement });
-          },
+      setUser: function (user) {
+        dispatch({ type: 'user', user: user });
+      },
     }
   }
   
