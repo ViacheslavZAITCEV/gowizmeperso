@@ -31,8 +31,14 @@ function Amis (props){
 
   const [modalVisible, setModalVisible] = useState(false);
   const [error, setError] = useState('');
-
+  
+  const [mesamis, setMesAmis] = useState(true);
+  const [chercherMesAmis, setChercherMesAmis] = useState(false);
+  const [inviterAmis, setInviterAmis] = useState(false);
     
+
+
+
     useEffect( ()=> {
         async function setListeDemanderAmis(){
           var token = props.user.token;
