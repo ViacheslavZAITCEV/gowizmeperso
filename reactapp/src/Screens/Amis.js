@@ -29,18 +29,11 @@ function Amis (props){
   const [user, setUser] = useState(props.user);
   const [amis, setAmis] = useState([]);
   const [demandesAmis, setDemandesAmis] = useState([]);
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const [error, setError] = useState('');
   
-  const [mesamis, setMesAmis] = useState(true);
   const [chercherMesAmis, setChercherMesAmis] = useState(false);
-  const [swthAmis, setswthAmis] = useState('chercher amis');
-  
   
   const [findPrenom, setFindPrenom] = useState('');
   const [findNom, setFindNom] = useState('');
-  const [findVille, setFindVille] = useState('');
   
   const [nomRecherche, setNomRecherche] = useState([]);
 
@@ -69,8 +62,6 @@ function Amis (props){
               setDemandesAmis(res.listeDemandesAmis)
           }else{
               console.log('error=',res.error);
-              setModalVisible(true);
-              setError(res.error);
           }
 
           setListeAmis();
@@ -99,8 +90,6 @@ function Amis (props){
                 setAmis(res.listeAmis)
             }else{
                 console.log(res.error);
-                setModalVisible(true);
-                setError(res.error);
             }
         }
     setListeDemanderAmis();
@@ -260,14 +249,18 @@ function Amis (props){
                     console.log("envoi de demande d'amis");
                     console.log("token=", user.token);
                     console.log("ami=", ami);
-                    const data = await fetch(`/demandeFriend`, {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                      body: `token=${user.token}&tokenAmi=${ami.token}`
-                    });
-                
-                    const body = await data.json()
-                    console.log('Demande ami. responseBE =', body);
+                    try{
+                      const data = await fetch(`/users/demandeFriend`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `token=${user.token}&tokenAmi=${ami.token}`
+                      });
+                  
+                      const body = await data.json()
+                      console.log('Demande ami. responseBE =', body);
+                    }catch(error){
+                      console.log('Page Amis, demandeFriend.error=', error);
+                    }
                   } else 
                   if (functionClickBtn === 'del'){
                     console.log("envoi de suppresion d'amis");
@@ -299,7 +292,8 @@ function Amis (props){
 
 
     var findAmis = async () => {
-
+      try {
+        
       const friendsData = await fetch(`/searchFriends`, {
         method: 'POST',
         headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
@@ -310,6 +304,9 @@ function Amis (props){
       console.log("FRIENDSEARCHSCREEN ======>",friendsResearch);
       setNomRecherche(friendsResearch);
 
+    } catch (error) {
+      console.log('Page Amis.friendsData(), searchFriends.error=', error);
+    }
   }
 
 
@@ -345,7 +342,9 @@ function Amis (props){
       console.log('resBD.status=', resBD.status);
       console.log()
       if (resBD.status) {
-
+        console.log()
+        console.log('resBD.user=', resBD.user);
+        
         setUser(resBD.user);
         props.setUser(user);
 

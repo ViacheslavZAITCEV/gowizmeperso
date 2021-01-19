@@ -7,7 +7,7 @@ import {
 
 import {
   Container, Row, Col,
-  Label, Input, 
+  Label, Input,
 } from 'reactstrap'
 
 
@@ -233,7 +233,11 @@ function Profil (props){
       return(
         <Row className='persoLine'>
           Ville : <Input type='text' onChange={ (e)=> setNewVille(e.target.value)} value={newVille} placeholder='ville de recherche' className='PersoInput' />
-          <Label className='button2' onClick={ ()=> {
+          <Label 
+          // type='submit'
+          className='button2' 
+          onClick={ ()=> {
+
             setVilleChange(false);
             var newUser = user;
             updateBD(`/users/update`, 'ville', newVille);
@@ -242,6 +246,7 @@ function Profil (props){
             console.log('Profil.displayNom(), newUser=', newUser)
             props.setUser(newUser);
           }
+
           }> valider </Label>
         </Row>
       )
