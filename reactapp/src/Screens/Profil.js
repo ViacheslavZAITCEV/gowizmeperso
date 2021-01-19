@@ -314,47 +314,39 @@ function Profil (props){
 
 
     return (
-    <Container>
-        <NavbarGwm/>
-        <Row>
-          <Col xs='12'>
-          <h3 className='titreEvent'>
-            Mon profil
-          </h3>
-          </Col>
-        </Row>
-        {displayAvatar()}
-        {displayNom()}
-        {displayPrenom()}
-        {displayVille()}
-        Préférences:
-        
+      <Container>
+      <NavbarGwm/>
+      <Row>
+        <Col xs='12'>
+        <h3 className='titreEvent'>
+          Mon profil
+        </h3>
+        </Col>
+      </Row>
+      {displayAvatar()}
+      {displayNom()}
+      {displayPrenom()}
+      {displayVille()}
+      <Row> Préférences: </Row>
+      <Row> 
+          {badges}
+      </Row>
+      <Row >
+        <Col xs="12">
+          <div
+          className='flexRowCenter'
+          >
+            <Button
+              className='button1'
+              onClick={ ()=> deconnecter()}
+              >
+                Deconecter        
+            </Button>
+          </div>
+        </Col>
+      </Row>
 
-        <Container>
-        <Row>
-          <Col xs='12' sm='6' md='4'lg='2' >
-            {badges}
-          </Col>
-        </Row>
-        <Row >
-          <Col xs="12">
-            <div
-            className='flexRowCenter'
-            >
-              <Button
-                className='button1'
-                onClick={ ()=> deconnecter()}
-                >
-                  Deconecter        
-              </Button>
-            </div>
-          </Col>
-        </Row>
-        </Container>
-
-
-
-    </Container>
+  </Container>
     )
  }
 }
