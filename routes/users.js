@@ -117,7 +117,7 @@ router.post('/sign-in', async function(req, res, next) {
     // console.log('crypte(req.body.pass)=', SHA256(req.body.password + userBD.salt).toString(encBase64));
 
     if ( userBD == null ){
-      response.error = 'email does not exist';
+      response.error = 'email  inconnu';
 
     } else if (userBD.mot_de_passe === SHA256(req.body.password + userBD.salt).toString(encBase64) ) {
       // password : SHA256(obj.password + salt).toString(encBase64),

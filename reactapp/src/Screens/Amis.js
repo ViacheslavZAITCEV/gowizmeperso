@@ -35,14 +35,14 @@ function Amis (props){
   
   const [mesamis, setMesAmis] = useState(true);
   const [chercherMesAmis, setChercherMesAmis] = useState(false);
-  const [inviterAmis, setInviterAmis] = useState(false);
+  const [swthAmis, setswthAmis] = useState('chercher amis');
   
   
   const [findPrenom, setFindPrenom] = useState('');
   const [findNom, setFindNom] = useState('');
   const [findVille, setFindVille] = useState('');
   
-  const [nomRecherche, setNomRecherche] = useState('');
+  const [nomRecherche, setNomRecherche] = useState([]);
 
 
 
@@ -221,7 +221,7 @@ function Amis (props){
       )
     }
     
-    function getAmis(amiIn){
+    function getAmis(amiIn, btn, functionClickBtn) {
       return(
         amiIn.map( (ami, i)=>{
           return(
@@ -236,7 +236,7 @@ function Amis (props){
                   {ami.prenom}, {ami.nom}
                 </div>
               </Col>
-              <Col xs='8' sm='8' md='9' lg='10' xl='10'>
+              <Col xs='8' sm='8' md='6' lg='8' xl='8'>
                 <div>
                 Ville : {ami.ville}
                 </div>
@@ -247,6 +247,46 @@ function Amis (props){
               {/* <Col xs='6' sm='2' md='1' lg='1' xl='1'>
                 {getSorties(ami.sorties)}
               </Col> */}
+              <Col xs='2' sm='2' md='3' lg='2' xl='2'
+              className='flexRowCenter'
+              >
+                <Button
+                key={i}
+                onClick={ async () => {
+                  if (functionClickBtn === 'add'){
+                    console.log("envoi de demande d'amis");
+                    console.log("token=", user.token);
+                    console.log("ami=", ami);
+                    const data = await fetch(`/demandeFriend`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: `token=${user.token}&idAmi=${ami._id}`
+                    });
+                
+                    const body = await data.json()
+                    console.log('Demande ami. responseBE =', body);
+                  } else 
+                  if (functionClickBtn === 'del'){
+                    console.log("envoi de suppresion d'amis");
+                    console.log("token=", user.token);
+                    console.log("ami=", ami);
+/*
+                    const data = await fetch(`/demandeFriend`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: `token=${user.token}&idAmi=${ami._id}`
+                    });
+                
+                    const body = await data.json()
+                    console.log('Demande ami. responseBE =', body);
+                    */
+                  }
+                }}
+                >
+                  {btn}
+                </Button>
+              </Col>
+              <Divider />
             </Row>
           )
         })
@@ -254,12 +294,8 @@ function Amis (props){
     }
     
 
-    function findAmis(){
-      handleSubmit();
-    }
 
-
-    var handleSubmit = async () => {
+    var findAmis = async () => {
 
       const friendsData = await fetch(`/searchFriends`, {
         method: 'POST',
@@ -274,6 +310,21 @@ function Amis (props){
   }
 
 
+  async function demandeAmis(ami){
+    console.log("envoi de demande d'amis");
+    console.log("token=", user.token);
+    console.log("ami=", ami);
+/*
+    const data = await fetch(`/demandeFriend`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `token=${user.token}&idAmi=${ami._id}`
+    });
+
+    const body = await data.json()
+    console.log('Demande ami. responseBE =', body)
+*/
+  }
 
 
 
@@ -302,8 +353,15 @@ function Amis (props){
               <Button
               className='button2'
               onClick={ ()=> {
-                console.log('click button mes amis');
                 setChercherMesAmis(false);
+              }}
+              >
+                mes amis
+              </Button>
+              <Button
+              className='button2'
+              onClick={ ()=> {
+                setChercherMesAmis(true);
               }}
               >
                 chercher amis
@@ -334,8 +392,8 @@ function Amis (props){
                   className='PersoInput' 
                   />
                 </Col>
-                </Row>
-                <Row>
+              </Row>
+              <Row>
                 <Col  xs='6' sm='3' md='3' lg='3' xl='3'
                   className='persoLine'
                 >
@@ -363,6 +421,12 @@ function Amis (props){
             </Col>
             </div>
     
+            <Divider />
+            <h4>
+              Liste de recherche amis:
+            </h4>
+            { nomRecherche.length ? getAmis(nomRecherche, 'ajouter', 'add') : 'vide'}
+            <Divider />
           </Container>
           </div>
         
@@ -385,7 +449,14 @@ function Amis (props){
           <Button
           className='button2'
           onClick={ ()=> {
-            console.log('click button mes amis');
+            setChercherMesAmis(false);
+          }}
+          >
+            mes amis
+          </Button>
+          <Button
+          className='button2'
+          onClick={ ()=> {
             setChercherMesAmis(true);
           }}
           >
@@ -395,8 +466,8 @@ function Amis (props){
         </Col>
         <Col  xs='6' sm='9' md='9' lg='10' xl='10'
         >
-          <Row>
-            <h3 className='titreEvent'>
+          <Row className='titreEvent'>
+            <h3 >
               Mes amis
             </h3>
           </Row>
@@ -406,7 +477,7 @@ function Amis (props){
             </h4>
           </Row>
 
-          {getDemadesAmis(demandesAmis)}
+          { demandesAmis.length ? getDemadesAmis(demandesAmis) : 'vide'}
           <Divider />
         </Col>
         </div>
@@ -417,7 +488,7 @@ function Amis (props){
         <h4>
           Liste de mes amis:
         </h4>
-        {getAmis(amis)}
+        {amis.length ? getAmis(amis, 'retirer', 'del') : 'vide'}
         <Divider />
 
       </Container>
