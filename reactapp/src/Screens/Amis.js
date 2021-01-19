@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import {
     Container, Row, Col, 
+    Label, Input,
 } from 'reactstrap'
 import { 
   Card, 
@@ -35,7 +36,13 @@ function Amis (props){
   const [mesamis, setMesAmis] = useState(true);
   const [chercherMesAmis, setChercherMesAmis] = useState(false);
   const [inviterAmis, setInviterAmis] = useState(false);
-    
+  
+  
+  const [findPrenom, setFindPrenom] = useState('');
+  const [findNom, setFindNom] = useState('');
+  const [findVille, setFindVille] = useState('');
+  
+  const [nomRecherche, setNomRecherche] = useState('');
 
 
 
@@ -247,79 +254,176 @@ function Amis (props){
     }
     
 
-  // if ( props.user.avatar ){
-  //     return(
-  //         <Redirect to='/' />
-  //     )
-    // }else if ( toPlaning ){
-    //   setTimeout( ()=> setToPlaning(false), 100);
-    //   return(
-    //       <Redirect to='/' />
-    //   )
-    // }else {
-      
+    function findAmis(){
+      handleSubmit();
+    }
 
-        return (
+
+    var handleSubmit = async () => {
+
+      const friendsData = await fetch(`/searchFriends`, {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'}, 
+        body: `nom=${findNom}`});
+
+      const friendsResearch = await friendsData.json();
+
+      console.log("FRIENDSEARCHSCREEN ======>",friendsResearch);
+      setNomRecherche(friendsResearch);
+
+  }
+
+
+
+
+
+
+
+
+
+  if ( ! props.user.avatar ){
+      return(
+          <Redirect to='/' />
+      )
+    }else if ( chercherMesAmis ){
+      return(
+        
           <div>
-        <Container>
-          <NavbarGwm/>
+          <Container>
+            <NavbarGwm/>
+    
+            <div className='flexCol'>
+    
+    
+            <Col 
+              xs='6' sm='3' md='3' lg='2' xl='2'
+            >
 
-          <div className='flexCol'>
+              <Button
+              className='button2'
+              onClick={ ()=> {
+                console.log('click button mes amis');
+                setChercherMesAmis(false);
+              }}
+              >
+                chercher amis
+              </Button>
+
+            </Col>
+            <Col  xs='6' sm='9' md='9' lg='10' xl='10'
+            >
+              <Row className='titreEvent'>
+                <h3 >
+                  Chercher amis
+                </h3>
+              </Row>
+              <Row>
+                <Col  xs='6' sm='3' md='3' lg='3' xl='3'
+                  className='persoLine'
+                >
+                  prénom : 
+                </Col>
+                <Col  xs='6' sm='3' md='3' lg='3' xl='3'
+                  className='persoLine'
+                >
+                  <Input 
+                  type='text' 
+                  onChange={ (e)=> setFindPrenom(e.target.value)} 
+                  value={findPrenom} 
+                  placeholder='prenom' 
+                  className='PersoInput' 
+                  />
+                </Col>
+                </Row>
+                <Row>
+                <Col  xs='6' sm='3' md='3' lg='3' xl='3'
+                  className='persoLine'
+                >
+                  nom : 
+                </Col>
+                <Col  xs='6' sm='3' md='3' lg='3' xl='3'
+                  className='persoLine'
+                >
+                  <Input 
+                  type='text' 
+                  onChange={ (e)=> setFindNom(e.target.value)} 
+                  value={findNom} 
+                  placeholder='nom' 
+                  className='PersoInput' 
+                  />
+                </Col>
+                <Label 
+                className='button1' onClick={ ()=> {
+                  console.log('click find amis');
+                  findAmis();
+                }
+                }> Chercher </Label>
+              </Row>
+
+            </Col>
+            </div>
+    
+          </Container>
+          </div>
+        
+      )
+    }else {
+    
+
+      return (
+      <div>
+      <Container>
+        <NavbarGwm/>
+
+        <div className='flexCol'>
 
 
-          <Col 
-            xs='6' sm='3' md='3' lg='2' xl='2'
+        <Col 
+          xs='6' sm='3' md='3' lg='2' xl='2'
+        >
+
+          <Button
+          className='button2'
+          onClick={ ()=> {
+            console.log('click button mes amis');
+            setChercherMesAmis(true);
+          }}
           >
-            <Button
-            className='button2'
-            onClick={ ()=> {console.log('click button mes amis')}}
-            >
-              mes amis
-            </Button>
-            <Button
-            className='button2'
-            onClick={ ()=> {console.log('click button mes amis')}}
-            >
-              chercher amis
-            </Button>
-            <Button
-            className='button2'
-            onClick={ ()=> {console.log('click button mes amis')}}
-            >
-              inviter amis
-            </Button>
-          </Col>
-          <Col  xs='6' sm='9' md='9' lg='10' xl='10'
-          >
-            <Row>
-              <h3 className='titreEvent'>
-                Mes amis
-              </h3>
-            </Row>
-            <Row>
-              <h4 >
-                Demandes d'amis:
-              </h4>
-            </Row>
+            chercher amis
+          </Button>
 
-            {getDemadesAmis(demandesAmis)}
-            <Divider />
-          </Col>
+        </Col>
+        <Col  xs='6' sm='9' md='9' lg='10' xl='10'
+        >
+          <Row>
+            <h3 className='titreEvent'>
+              Mes amis
+            </h3>
+          </Row>
+          <Row>
+            <h4 >
+              Demandes d'amis:
+            </h4>
+          </Row>
+
+          {getDemadesAmis(demandesAmis)}
+          <Divider />
+        </Col>
         </div>
 
       </Container>
       <Container>
 
-                <h4>
-                  Liste de mes amis:
-                </h4>
-                {getAmis(amis)}
-                <Divider />
+        <h4>
+          Liste de mes amis:
+        </h4>
+        {getAmis(amis)}
+        <Divider />
 
-        </Container>
+      </Container>
       </div>
     )
-  // }
+  }
 }
 
 

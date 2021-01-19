@@ -255,12 +255,17 @@ function Profil (props){
     if (!avatarChange){
       return(
         <Row >
-        <img
-          className='persoAvatar'
-          alt={user.nom}
-          src={avatar}
-          onClick={ ()=> {console.log('click avatar'); setAvatarChange(true)}}
-        />
+          <Col xs="12" sm="12" md="12" lg="12" xl="12">
+            <div className='flexRowCenter'>
+
+              <img
+                className='persoAvatar'
+                alt={user.nom}
+                src={avatar}
+                onClick={ ()=> {console.log('click avatar'); setAvatarChange(true)}}
+              />
+            </div>
+          </Col>
         </Row>
       )
     }else{
@@ -311,6 +316,13 @@ function Profil (props){
     return (
     <Container>
         <NavbarGwm/>
+        <Row>
+          <Col xs='12'>
+          <h3 className='titreEvent'>
+            Mon profil
+          </h3>
+          </Col>
+        </Row>
         {displayAvatar()}
         {displayNom()}
         {displayPrenom()}
@@ -320,14 +332,17 @@ function Profil (props){
             {badges}
         </Row>
         <Row >
-          <Col xs="4" lg="2" xl="1">
-            <Button
-              className='button1'
-              onClick={ ()=> deconnecter()}
-              >
-                Deconecter        
-
+          <Col xs="12">
+            <div
+            className='flexRowCenter'
+            >
+              <Button
+                className='button1'
+                onClick={ ()=> deconnecter()}
+                >
+                  Deconecter        
               </Button>
+            </div>
           </Col>
         </Row>
       {/* </Col> */}
