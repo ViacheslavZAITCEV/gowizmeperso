@@ -353,12 +353,7 @@ function Profil (props){
         </Container>
 
 
-        <Button          
-          className='button1'
-          onClick={ ()=> deconnecter()}
-        >
-          Deconecter        
-        </Button>
+
     </Container>
     )
  }
