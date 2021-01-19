@@ -60,30 +60,45 @@ function MainPage (props){
                 }else if (eventMap.type === 'théâtre'){
                   theatreCards.push(
 
-                      <CardEvenement
-                        key={i}
-                        event={eventMap}
-                        item={i}   
-                        >
-                      </CardEvenement>
+                    <CardEvenement
+                    key={i}
+                    event={eventMap}
+                    // description={eventMap.description}
+                    item={i}
+                    sizeCard={{ width: 240, height: 440 }}
+                    sizeImg={{ width: 240, height: 300 }}
+                    styleHeartFond={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+                    styleHeart={{position: 'relative', top: -422, left: 182 }}
+                    >
+                  </CardEvenement>
                   )
                 }else if (eventMap.type === 'exposition'){
                   expoCards.push(
-                      <CardEvenement
-                        event={eventMap}
-                        key={i}
-                        item={i}   
-                        >
-                      </CardEvenement>
+                    <CardEvenement
+                    key={i}
+                    event={eventMap}
+                    // description={eventMap.description}
+                    item={i}
+                    sizeCard={{ width: 240, height: 440 }}
+                    sizeImg={{ width: 240, height: 300 }}
+                    styleHeartFond={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+                    styleHeart={{position: 'relative', top: -422, left: 182 }}
+                    >
+                  </CardEvenement>
                   )
                 }else if (eventMap.type === 'concert'){
                   concertCards.push(
-                      <CardEvenement
-                        event={eventMap}
-                        key={i}
-                        item={i}   
-                        >
-                      </CardEvenement>
+                    <CardEvenement
+                    key={i}
+                    event={eventMap}
+                    // description={eventMap.description}
+                    item={i}
+                    sizeCard={{ width: 240, height: 440 }}
+                    sizeImg={{ width: 240, height: 300 }}
+                    styleHeartFond={{position: 'relative', top: -420, left: 200, width: 20, height: 20 }}
+                    styleHeart={{position: 'relative', top: -422, left: 182 }}
+                    >
+                  </CardEvenement>
                   )
                 };
             }
