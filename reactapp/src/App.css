@@ -88,7 +88,7 @@
 .Sign {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   /* margin: 1vw; */
 }
@@ -151,7 +151,7 @@
 
 .navBarAvatarCol {
   display: flex;
-  justify-content: right;
+  justify-content: center;
 }
 .navBarAvatar {
   height: 8vh;
