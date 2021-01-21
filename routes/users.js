@@ -392,6 +392,40 @@ router.post('/findDemandes', async function (req, res, next) {
 
 
 
+// Route creation Demande  amis 
+router.post('/demandeFriend', async function (req, res, next) {
+
+  console.log();
+  console.log("INDEX.JS, route: /demandeFriend");
+  console.log("req.body.token=", req.body.token);
+  console.log("req.body.tokenAmi=", req.body.tokenAmi);
+
+  var result = { status: false }
+  try {
+    var user = await users.findOne({ token: req.body.token });
+    console.log(user);
+    var ami = await users.findOne({ token: req.body.tokenAmi });
+    console.log(ami);
+    const newDemande = new friendRequest({
+      demandeur: user._id,
+      receveur: ami._id,
+      statut: true
+    })
+
+    result.response = await newDemande.save();
+    result.status = true;
+  } catch (e) {
+    result.error = e;
+    console.log(e);
+  }
+  console.log("result=", result);
+
+  res.json(result);
+
+});
+
+
+
 // Route acceptation d'une Demandes  d'amis 
 router.post('/accepteDemande', async function (req, res, next) {
 
@@ -404,27 +438,29 @@ router.post('/accepteDemande', async function (req, res, next) {
   var tokenAmi = req.body.tokenDemandeur;
   var result = { status: false }
 
-  var ami = await getUser({token : req.body.tokenDemandeur});
+  // var ami = await getUser({token : tokenAmi});
 
   try {
 
     // update receveur
-    var idAmi = ami._id;
+    // var idAmi = ami._id;
     var userBD = await users.findOneAndUpdate(
       { token },
-      { $push: { amis: tokenAmi } }
+      { $push: { amis: tokenAmi } },
+      { useFindAndModify: false }
     );
     console.log('users.JS, route: /accepteDemande, userBD=',userBD);
     
     // update demandeur
     var idUser = userBD._id;
-    var user2 = await users.findOneAndUpdate(
+    var userAmi = await users.findOneAndUpdate(
       { token: tokenAmi },
-      { $push: { amis: token } }
+      { $push: { amis: token } } ,
+      { useFindAndModify: false }
     );
-    console.log('users.JS, route: /accepteDemande, user2=',user2);
+    console.log('users.JS, route: /accepteDemande, userAmi=',userAmi);
       
-    var remove = await friendRequest.remove({ receveur: idUser, demandeur: idAmi });
+    var remove = await friendRequest.remove({ receveur: idUser, demandeur: userAmi._id });
     console.log('users.JS, route: /accepteDemande, remove=',remove);
 
     result.user = {

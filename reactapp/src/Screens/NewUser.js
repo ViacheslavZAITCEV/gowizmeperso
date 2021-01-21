@@ -29,8 +29,8 @@ function MainPage (props){
   const [errSignUp, setErrSignUp] = useState('');
   
 
-    if (user === undefined) {
-      console.log('NewUserPage, redirect to MainPage')
+    if ( ! user.token === undefined ) {
+      console.log('NewUserPage, redirect to MainPage, user.token =', user.token);
       return (
         <Redirect to='/' />
       )
@@ -70,9 +70,11 @@ function MainPage (props){
           <NavbarGwm/>
       </Col>
       <Row>
+        <Col xs='12'>
         <h3 className='titreEvent'>
           Inscription
         </h3>
+        </Col>
       </Row>
       <Row className='newUser'>
         <Form className='newUserForm'>

@@ -12,6 +12,7 @@ import {
 
 
 import { connect } from 'react-redux';
+import Form from 'antd/lib/form/Form';
 
 function Perso(props) {
 
@@ -37,29 +38,33 @@ function Perso(props) {
         headers: {'Content-Type':'application/x-www-form-urlencoded'},
         body : `email=${login}&password=${pass}`
       };
-      var resultRAW = await fetch(`/users/sign-in`, requet);
-      var result = await resultRAW.json();
-      if(result.response){
-        console.log('login with email = ', login);
-        var user = {
-          token : result.token,
-          nom : result.nom,
-          prenom :  result.prenom,
-          avatar : result.avatar,
-          ville  : result.ville,
-          preferences  : result.preferences,
-          groupes  : result.groupes,
-          favoris  : result.favoris,
-          sorties  : result.sorties,
-          amis  : result.amis,
-          confidentialite  : result.confidentialite,
-          age : result.age,
-        };
-        props.setUser(user);
-        setUser(user);
-        // setToMainPage(true);
-      }else{
-        setErrSignIn (result.error);
+      try{
+        var resultRAW = await fetch(`/users/sign-in`, requet);
+        var result = await resultRAW.json();
+        if(result.response){
+          console.log('login with email = ', login);
+          var user = {
+            token : result.token,
+            nom : result.nom,
+            prenom :  result.prenom,
+            avatar : result.avatar,
+            ville  : result.ville,
+            preferences  : result.preferences,
+            groupes  : result.groupes,
+            favoris  : result.favoris,
+            sorties  : result.sorties,
+            amis  : result.amis,
+            confidentialite  : result.confidentialite,
+            age : result.age,
+          };
+          props.setUser(user);
+          setUser(user);
+          // setToMainPage(true);
+        }else{
+          setErrSignIn (result.error);
+        }
+      }catch (error){
+        console.log ('Component Perso, loginFE.error=', error);
       }
     }
   }
@@ -100,6 +105,7 @@ function Perso(props) {
 
     if ( user.avatar === undefined){
         return(
+          <Form>
           <Col xs='6'  md='5'>
             <div  className="Sign">
                 <Input 
@@ -109,6 +115,7 @@ function Perso(props) {
                 placeholder='votre email' 
                 value={login}/>
                 <Button 
+                type='submit'
                 onClick={ ()=> loginFE() } 
                 className="navBarBtn" 
                 >
@@ -134,9 +141,10 @@ function Perso(props) {
                 <Label style={{color : '#EFB509'}}>{errSignIn}</Label> 
             </div>
           </Col>
+          </Form>
     )
     }else{
-        console.log('avatar')
+        // console.log('avatar')
         return (
           <Col xs='6'  md='6' className='navbarRow'>
               <Col md="2">
