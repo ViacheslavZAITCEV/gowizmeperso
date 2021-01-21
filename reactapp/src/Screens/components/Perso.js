@@ -106,7 +106,7 @@ function Perso(props) {
     if ( user.avatar === undefined){
         return(
           <Form>
-          <Col xs='6'  md='5'>
+          <Col xs='12'  md='8'>
             <div  className="Sign">
                 <Input 
                 type='email' 

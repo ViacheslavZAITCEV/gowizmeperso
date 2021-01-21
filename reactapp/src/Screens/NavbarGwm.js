@@ -66,7 +66,7 @@ function NavbarGwm(props) {
     return (
       <Navbar className='navbargowizme'>
 
-              <Col xs='3' md="2" >
+              <Col xs='4' md="2" >
                   <Button 
                     onClick={ ()=> setToMainPage(true) } 
                     className='navBarBtn'
@@ -74,7 +74,7 @@ function NavbarGwm(props) {
                     évènements
                   </Button>
               </Col>
-              <Col xs='4' md="3" className='NavBarInput'>
+              <Col xs='7' md="2" className='NavBarInput'>
                 <Input 
                 type='text' 
                 onChange={ (e)=> setSearch(e.target.value)} 
